@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48089A741976DF4D00EBEB53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A731976DF4D00EBEB53 /* MapKit.framework */; };
+		48089A761976E0FE00EBEB53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A751976E0FE00EBEB53 /* CoreLocation.framework */; };
 		48EA31CA1976DE5F0063346A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31C91976DE5F0063346A /* Foundation.framework */; };
 		48EA31CC1976DE5F0063346A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31CB1976DE5F0063346A /* CoreGraphics.framework */; };
 		48EA31CE1976DE5F0063346A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31CD1976DE5F0063346A /* UIKit.framework */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48089A731976DF4D00EBEB53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		48089A751976E0FE00EBEB53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		48EA31C61976DE5F0063346A /* iTravel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTravel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48EA31C91976DE5F0063346A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		48EA31CB1976DE5F0063346A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48089A761976E0FE00EBEB53 /* CoreLocation.framework in Frameworks */,
+				48089A741976DF4D00EBEB53 /* MapKit.framework in Frameworks */,
 				48EA31CC1976DE5F0063346A /* CoreGraphics.framework in Frameworks */,
 				48EA31CE1976DE5F0063346A /* UIKit.framework in Frameworks */,
 				48EA31CA1976DE5F0063346A /* Foundation.framework in Frameworks */,
@@ -103,6 +109,8 @@
 		48EA31C81976DE5F0063346A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48089A751976E0FE00EBEB53 /* CoreLocation.framework */,
+				48089A731976DF4D00EBEB53 /* MapKit.framework */,
 				48EA31C91976DE5F0063346A /* Foundation.framework */,
 				48EA31CB1976DE5F0063346A /* CoreGraphics.framework */,
 				48EA31CD1976DE5F0063346A /* UIKit.framework */,
@@ -471,6 +479,7 @@
 				48EA31FD1976DE5F0063346A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		48EA31FE1976DE5F0063346A /* Build configuration list for PBXNativeTarget "iTravelTests" */ = {
 			isa = XCConfigurationList;
@@ -479,6 +488,7 @@
 				48EA32001976DE5F0063346A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
