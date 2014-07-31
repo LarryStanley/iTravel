@@ -24,6 +24,12 @@
     mainMap.showsUserLocation = YES;
     [self.view addSubview:mainMap];
     
+    // Init Search Bar
+    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, 300, 44)];
+    topSearchBar.delegate = self;
+    
+    [mainMap addSubview:topSearchBar];
+    
     // Init location manager
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -31,6 +37,7 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     [locationManager startUpdatingLocation];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,8 +64,72 @@
         
         [mainMap setRegion:region animated:YES];
         [locationManager stopUpdatingLocation];
+        currentLocation = newLocation;
     }
-    NSLog(@"%f %f",newLocation.coordinate.latitude, newLocation.coordinate.longitude);
 }
+
+#pragma mark - All about get data controller delegate
+
+- (void)getDataController:(GetDataController *)controller didFinishReceiveData:(NSDictionary *)receiveData
+{
+    searchResults = [receiveData objectForKey:@"results"];
+    [searchResultTableView reloadData];
+    [self.view addSubview:searchResultTableView];
+}
+
+#pragma mark - All about UISearchBar delegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+    
+    searchResultTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height - 84)];
+    searchResultTableView.delegate = self;
+    searchResultTableView.dataSource = self;
+    searchResults = [[NSMutableArray alloc] init];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length > 0) {
+        GetDataController *getDataController = [[GetDataController alloc] init:currentLocation];
+        getDataController.delegate = self;
+        [getDataController searchFromKeyword:searchText];
+    }else{
+        [searchResultTableView removeFromSuperview];
+    }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+#pragma mark - All about search table view delegate and datasource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [searchResults count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
+    
+    return cell;
+}
+
 
 @end

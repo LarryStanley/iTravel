@@ -9,10 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "GetDataController.h"
 
-@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
+@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     MKMapView *mainMap;
     CLLocationManager *locationManager;
+    CLLocation *currentLocation;
+    UISearchBar *topSearchBar;
+    
+    UITableView *searchResultTableView;
+    NSMutableArray *searchResults;
 }
 @end
