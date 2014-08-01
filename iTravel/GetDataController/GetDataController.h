@@ -25,8 +25,11 @@
 
 @property (nonatomic, weak) id <GetDataControllerDelegate> delegate;
 
-- (id) init:(CLLocation *)queryLocation;
+- (id) initWithDirectQuery:(CLLocation *)queryLocation;
+- (id) initWithSearchNearby:(CLLocation *)queryLocation;
+
 - (void) getData:(NSURL *)URL;
 - (void) searchFromKeyword:(NSString *)keyword;
+- (void) searchNearby:(NSString *)type;
 
 @end

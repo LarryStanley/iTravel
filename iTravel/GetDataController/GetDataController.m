@@ -10,10 +10,19 @@
 
 @implementation GetDataController
 
-- (id)init:(CLLocation *)queryLocation {
+- (id)initWithDirectQuery:(CLLocation *)queryLocation {
     self = [super init];
     if (self) {
         baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI&sensor=true&location=%f,%f&radius=1000",queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
+    }
+    return self;
+}
+
+- (id)initWithSearchNearby:(CLLocation *)queryLocation
+{
+    self = [super init];
+    if (self) {
+        baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI&sensor=true&location=%f,%f&radius=1000",queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
     }
     return self;
 }
@@ -40,6 +49,15 @@
     NSString *advancedURL = [baseURL stringByAppendingString:[NSString stringWithFormat:@"&query=%@",keyword]];
     advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getData:[NSURL URLWithString:advancedURL]];
+}
+
+- (void) searchNearby:(NSString *)type
+{
+    NSString *advancedURL = [baseURL stringByAppendingString:[NSString stringWithFormat:@"&types=%@",type]];
+    advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [self getData:[NSURL URLWithString:advancedURL]];
+
 }
 
 @end

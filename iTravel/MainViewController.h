@@ -13,6 +13,8 @@
 
 @interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 {
+    NSString *searchType;
+    
     MKMapView *mainMap;
     CLLocationManager *locationManager;
     CLLocation *currentLocation;
@@ -20,5 +22,19 @@
     
     UITableView *searchResultTableView;
     NSMutableArray *searchResults;
+    
+    UIButton *menuButton;
+    NSMutableArray *categoryButtons;
 }
+
+- (void)changeMapCenter:(CLLocationCoordinate2D)location;
+
+- (void)showSearchTableView;
+- (void)hideSearchTableView;
+
+- (void)showCategoryButton;
+- (void)menuButtonPressed;
+
+- (void)showCategoryResult:(UIButton *)button;
+
 @end

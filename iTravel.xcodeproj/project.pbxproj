@@ -20,6 +20,11 @@
 		48A50A451988032D00BF4F50 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A3A1988032D00BF4F50 /* AFURLRequestSerialization.m */; };
 		48A50A461988032D00BF4F50 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A3C1988032D00BF4F50 /* AFURLResponseSerialization.m */; };
 		48A50A471988032D00BF4F50 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A3E1988032D00BF4F50 /* AFURLSessionManager.m */; };
+		48C0DD64198AB19D001BD159 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C0DD63198AB19D001BD159 /* MapAnnotation.m */; };
+		48C0DD69198B4189001BD159 /* menuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 48C0DD67198B4189001BD159 /* menuButton.png */; };
+		48C0DD6A198B4189001BD159 /* menuButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 48C0DD68198B4189001BD159 /* menuButtonSelected.png */; };
+		48C0DD6C198B45CC001BD159 /* restaurantIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 48C0DD6B198B45CC001BD159 /* restaurantIcon.png */; };
+		48C0DD6E198B502E001BD159 /* coffee.png in Resources */ = {isa = PBXBuildFile; fileRef = 48C0DD6D198B502E001BD159 /* coffee.png */; };
 		48EA31CA1976DE5F0063346A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31C91976DE5F0063346A /* Foundation.framework */; };
 		48EA31CC1976DE5F0063346A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31CB1976DE5F0063346A /* CoreGraphics.framework */; };
 		48EA31CE1976DE5F0063346A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31CD1976DE5F0063346A /* UIKit.framework */; };
@@ -72,6 +77,12 @@
 		48A50A3C1988032D00BF4F50 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		48A50A3D1988032D00BF4F50 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		48A50A3E1988032D00BF4F50 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		48C0DD62198AB19D001BD159 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnnotation.h; path = "Map Annotation/MapAnnotation.h"; sourceTree = "<group>"; };
+		48C0DD63198AB19D001BD159 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAnnotation.m; path = "Map Annotation/MapAnnotation.m"; sourceTree = "<group>"; };
+		48C0DD67198B4189001BD159 /* menuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuButton.png; sourceTree = "<group>"; };
+		48C0DD68198B4189001BD159 /* menuButtonSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuButtonSelected.png; sourceTree = "<group>"; };
+		48C0DD6B198B45CC001BD159 /* restaurantIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restaurantIcon.png; sourceTree = "<group>"; };
+		48C0DD6D198B502E001BD159 /* coffee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffee.png; sourceTree = "<group>"; };
 		48EA31C61976DE5F0063346A /* iTravel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTravel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48EA31C91976DE5F0063346A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		48EA31CB1976DE5F0063346A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,6 +176,26 @@
 			name = AFNetworking;
 			sourceTree = "<group>";
 		};
+		48C0DD65198AB1A5001BD159 /* Map Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				48C0DD62198AB19D001BD159 /* MapAnnotation.h */,
+				48C0DD63198AB19D001BD159 /* MapAnnotation.m */,
+			);
+			name = "Map Annotation";
+			sourceTree = "<group>";
+		};
+		48C0DD66198B4167001BD159 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				48C0DD67198B4189001BD159 /* menuButton.png */,
+				48C0DD68198B4189001BD159 /* menuButtonSelected.png */,
+				48C0DD6B198B45CC001BD159 /* restaurantIcon.png */,
+				48C0DD6D198B502E001BD159 /* coffee.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		48EA31BD1976DE5F0063346A = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +237,7 @@
 				48EA31DE1976DE5F0063346A /* Main_iPad.storyboard */,
 				483C84D71987FE83003CF408 /* Main View Controller */,
 				48A50A29198800D100BF4F50 /* Get Data Controller */,
+				48C0DD65198AB1A5001BD159 /* Map Annotation */,
 				48A50A481988033400BF4F50 /* AFNetworking */,
 				48EA31E41976DE5F0063346A /* Images.xcassets */,
 				48EA31D01976DE5F0063346A /* Supporting Files */,
@@ -216,6 +248,7 @@
 		48EA31D01976DE5F0063346A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				48C0DD66198B4167001BD159 /* Images */,
 				48EA31D11976DE5F0063346A /* iTravel-Info.plist */,
 				48EA31D21976DE5F0063346A /* InfoPlist.strings */,
 				48EA31D51976DE5F0063346A /* main.m */,
@@ -290,6 +323,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = LarryStanley;
 				TargetAttributes = {
+					48EA31C51976DE5F0063346A = {
+						DevelopmentTeam = 7RGJFTJXTK;
+					};
 					48EA31E91976DE5F0063346A = {
 						TestTargetID = 48EA31C51976DE5F0063346A;
 					};
@@ -319,11 +355,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48C0DD69198B4189001BD159 /* menuButton.png in Resources */,
 				48EA31E01976DE5F0063346A /* Main_iPad.storyboard in Resources */,
 				48EA31E51976DE5F0063346A /* Images.xcassets in Resources */,
 				48987B8D198A8C6E009A4D58 /* Location.gpx in Resources */,
+				48C0DD6E198B502E001BD159 /* coffee.png in Resources */,
 				48EA31DD1976DE5F0063346A /* Main_iPhone.storyboard in Resources */,
 				48EA31D41976DE5F0063346A /* InfoPlist.strings in Resources */,
+				48C0DD6A198B4189001BD159 /* menuButtonSelected.png in Resources */,
+				48C0DD6C198B45CC001BD159 /* restaurantIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +395,7 @@
 				48A50A461988032D00BF4F50 /* AFURLResponseSerialization.m in Sources */,
 				48A50A471988032D00BF4F50 /* AFURLSessionManager.m in Sources */,
 				48EA31DA1976DE5F0063346A /* MainAppDelegate.m in Sources */,
+				48C0DD64198AB19D001BD159 /* MapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,10 +530,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTravel/iTravel-Prefix.pch";
 				INFOPLIST_FILE = "iTravel/iTravel-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AC476217-324D-4A71-919E-09C80CCCE62D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -502,10 +546,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTravel/iTravel-Prefix.pch";
 				INFOPLIST_FILE = "iTravel/iTravel-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AC476217-324D-4A71-919E-09C80CCCE62D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
