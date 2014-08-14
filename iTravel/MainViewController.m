@@ -30,9 +30,18 @@
     topSearchBar.delegate = self;
     topSearchBar.placeholder = @"搜尋附近地區";
     // Set Search Bar Interface
-    UITextField *searchBarTextField = [topSearchBar valueForKey:@"_searchField"];
-    searchBarTextField.backgroundColor = [UIColor redColor];
-    topSearchBar.searchBarStyle = UISearchBarStyleMinimal;
+    [topSearchBar setBarTintColor:[UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1]];
+    for (UIView *subView in topSearchBar.subviews) {
+        for (UIView *subSubView in subView.subviews) {
+            if ([subSubView isKindOfClass:[UITextField class]]) {
+                UITextField *textField = (UITextField *)subSubView;
+                textField.backgroundColor = [UIColor clearColor];
+                break;
+            }
+            
+        }
+    }
+
     
     [mainMap addSubview:topSearchBar];
     
@@ -125,7 +134,16 @@
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
-    
+    for (UIView *subView in searchBar.subviews) {
+        for (UIView *subSubView in subView.subviews) {
+            if ([subSubView isKindOfClass:[UIButton class]]) {
+                UIButton *cancelButton = (UIButton *)subView;
+                cancelButton.tintColor = [UIColor whiteColor];
+                break;
+            }
+        }
+    }
+
     searchResultTableView = [[UITableView alloc] initWithFrame:CGRectMake( 10, 84, 300, self.view.frame.size.height - 84)];
     searchResultTableView.delegate = self;
     searchResultTableView.dataSource = self;
