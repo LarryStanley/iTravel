@@ -36,12 +36,23 @@
             if ([subSubView isKindOfClass:[UITextField class]]) {
                 UITextField *textField = (UITextField *)subSubView;
                 textField.backgroundColor = [UIColor clearColor];
+                textField.textColor = [UIColor whiteColor];
                 break;
             }
             
         }
     }
 
+    // Init current location button
+    currentLocationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [currentLocationButton setBackgroundImage:[UIImage imageNamed:@"currentLocationButton.png"]
+                                     forState:UIControlStateNormal];
+    currentLocationButton.frame = CGRectMake(10, self.view.frame.size.height - 40, 30, 30);
+    [currentLocationButton addTarget:self
+                              action:@selector(showCurrentLocation)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:currentLocationButton];
+    
     
     [mainMap addSubview:topSearchBar];
     
@@ -52,12 +63,6 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     [locationManager startUpdatingLocation];
-    
-    menuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 54, self.view.frame.size.height - 54, 44, 44)];
-    [menuButton setBackgroundImage:[UIImage imageNamed:@"menuButton.png"] forState:UIControlStateNormal];
-    [menuButton setBackgroundImage:[UIImage imageNamed:@"menuButtonSelected.png"] forState:UIControlStateSelected];
-    [menuButton addTarget:self action:@selector(menuButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:menuButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,6 +88,11 @@
     }
 }
 
+- (void)showCurrentLocation
+{
+    [self changeMapCenter:currentLocation.coordinate];
+}
+
 #pragma mark - All about map method
 
 - (void)changeMapCenter:(CLLocationCoordinate2D)location
@@ -94,6 +104,20 @@
     region.span.longitudeDelta = 0.01;
     
     [mainMap setRegion:region animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    MKPinAnnotationView *newAnnotation;
+    if (![newAnnotation isKindOfClass:[MKUserLocation class]]) {
+        newAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                        reuseIdentifier:@"pinLocation"];
+        newAnnotation.canShowCallout = YES;
+        newAnnotation.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    } else {
+        newAnnotation.canShowCallout = NO;
+    }
+    return newAnnotation;
 }
 
 #pragma mark - All about get data controller delegate
@@ -138,7 +162,7 @@
         for (UIView *subSubView in subView.subviews) {
             if ([subSubView isKindOfClass:[UIButton class]]) {
                 UIButton *cancelButton = (UIButton *)subView;
-                cancelButton.tintColor = [UIColor whiteColor];
+                cancelButton.tintColor = [UIColor colorWithRed:231/255.f green:64/255.f blue:72/255.f alpha:1];
                 break;
             }
         }
@@ -148,11 +172,15 @@
     searchResultTableView.delegate = self;
     searchResultTableView.dataSource = self;
     searchResultTableView.alpha = 0;
+    searchResultTableView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
     
     searchResults = [[NSMutableArray alloc] init];
     
-    if (searchBar.text.length > 0)
+    if (searchBar.text.length > 0){
         [self showSearchTableView];
+        [self dismissCategoryView];
+    }else
+        [self showCategoryView];
     
 }
 
@@ -162,8 +190,11 @@
         GetDataController *getDataController = [[GetDataController alloc] initWithDirectQuery:currentLocation];
         getDataController.delegate = self;
         [getDataController searchFromKeyword:searchText];
+        
+        [self dismissCategoryView];
     }else{
         [self hideSearchTableView];
+        [self showCategoryView];
     }
 }
 
@@ -171,12 +202,14 @@
 {
     [self.view endEditing:YES];
     [self hideSearchTableView];
+    [self dismissCategoryView];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:NO animated:YES];
     [self hideSearchTableView];
+    [self dismissCategoryView];
 }
 
 - (void)showSearchTableView
@@ -217,6 +250,8 @@
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
     
     return cell;
 }
@@ -243,55 +278,53 @@
     
 }
 
-#pragma mark - All about menu button press
+#pragma mark - All about category view
 
-- (void)menuButtonPressed
+- (void)showCategoryView
 {
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(showCategoryButton)];
-    menuButton.frame = CGRectMake(menuButton.frame.origin.x + 54, menuButton.frame.origin.y, 44, 44);
-    [UIView commitAnimations];
-}
-
-- (void)showCategoryButton
-{
-    categoryButtons = [[NSMutableArray alloc] init];
-    NSMutableArray *buttonImageName = [[NSMutableArray alloc] initWithObjects:@"restaurantIcon.png", @"coffee.png", nil];
-    for (int i = 0; i < 2; i++) {
-        UIButton *singleButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width + (i * 54) + 10 , self.view.frame.size.height - 54, 44, 44)];
-        [singleButton setBackgroundImage:[UIImage imageNamed:[buttonImageName objectAtIndex:i]] forState:UIControlStateNormal];
-        [singleButton addTarget:self action:@selector(showCategoryResult:) forControlEvents:UIControlEventTouchUpInside];
-        singleButton.tag = i;
-        [categoryButtons addObject:singleButton];
+    if (!categoryView) {
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, 84, 300, 60)];
+        categoryView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
+        categoryView.alpha = 0;
+        [self.view addSubview:categoryView];
         
-        [self.view addSubview:(UIButton *)[categoryButtons objectAtIndex:i]];
+        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"車站"];
+        float lastButtonPosition = 0;
+        for (int i = 0; i < [categoryName count]; i++) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [button setTag:i];
+            [button addTarget:self action:@selector(categoryButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitle:[categoryName objectAtIndex:i] forState:UIControlStateNormal];
+            [button sizeToFit];
+            button.tintColor = [UIColor whiteColor];
+            button.frame = CGRectMake(lastButtonPosition + 20, 0, button.frame.size.width, 60);
+            [categoryView addSubview:button];
+            
+            lastButtonPosition = button.frame.origin.x + button.frame.size.width;
+        }
     }
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
-    for (int i = 0; i < 2; i++) {
-        UIButton *singleButton = (UIButton *)[categoryButtons objectAtIndex:i];
-        singleButton.frame = CGRectMake(10 + i * 54, singleButton.frame.origin.y, 44, 44);
-    }
+    categoryView.alpha = 1;
     [UIView commitAnimations];
 }
+
+- (void)dismissCategoryView
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    categoryView.alpha = 0;
+    [UIView commitAnimations];
+}
+
 
 #pragma mark - Show category result
 
-- (void)showCategoryResult:(UIButton *)button
+- (void)categoryButtonPress:(UIButton *)button;
 {
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-    for (int i = 0; i < 2; i++) {
-        UIButton *singleButton = (UIButton *)[categoryButtons objectAtIndex:i];
-        singleButton.frame = CGRectMake(self.view.frame.size.width + (i * 54) + 10, singleButton.frame.origin.y, 44, 44);
-    }
-    menuButton.frame = CGRectMake(self.view.frame.size.width - 54, self.view.frame.size.height - 54, 44, 44);
-    [UIView commitAnimations];
-    
+    [self.view endEditing:YES];
+    [self dismissCategoryView];
     
     NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe",nil];
     searchType = @"nearby";

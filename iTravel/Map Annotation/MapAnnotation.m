@@ -14,4 +14,5 @@
 @synthesize subtitle;
 @synthesize coordinate;
 
+
 @end

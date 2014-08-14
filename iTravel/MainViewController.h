@@ -23,18 +23,21 @@
     UITableView *searchResultTableView;
     NSMutableArray *searchResults;
     
-    UIButton *menuButton;
-    NSMutableArray *categoryButtons;
+    UIView *categoryView;
+    
+    UIButton *currentLocationButton;
 }
+
+- (void)showCurrentLocation;
 
 - (void)changeMapCenter:(CLLocationCoordinate2D)location;
 
 - (void)showSearchTableView;
 - (void)hideSearchTableView;
 
-- (void)showCategoryButton;
-- (void)menuButtonPressed;
+- (void)showCategoryView;
+- (void)dismissCategoryView;
 
-- (void)showCategoryResult:(UIButton *)button;
+- (void)categoryButtonPress:(UIButton *)button;
 
 @end
