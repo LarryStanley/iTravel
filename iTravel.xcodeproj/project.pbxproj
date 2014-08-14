@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		48089A741976DF4D00EBEB53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A731976DF4D00EBEB53 /* MapKit.framework */; };
 		48089A761976E0FE00EBEB53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A751976E0FE00EBEB53 /* CoreLocation.framework */; };
+		4856241A199D270200D42DB1 /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48562419199D270200D42DB1 /* PlaceDetailViewController.m */; };
 		48987B8D198A8C6E009A4D58 /* Location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 48987B8C198A8C6E009A4D58 /* Location.gpx */; };
 		48A50A28198800CC00BF4F50 /* GetDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A27198800CC00BF4F50 /* GetDataController.m */; };
 		48A50A3F1988032D00BF4F50 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A2D1988032D00BF4F50 /* AFHTTPRequestOperation.m */; };
@@ -52,6 +53,8 @@
 /* Begin PBXFileReference section */
 		48089A731976DF4D00EBEB53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		48089A751976E0FE00EBEB53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		48562418199D270200D42DB1 /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = "Place Detail View Controller/PlaceDetailViewController.h"; sourceTree = "<group>"; };
+		48562419199D270200D42DB1 /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = "Place Detail View Controller/PlaceDetailViewController.m"; sourceTree = "<group>"; };
 		48987B8C198A8C6E009A4D58 /* Location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		48A50A26198800CC00BF4F50 /* GetDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetDataController.h; path = GetDataController/GetDataController.h; sourceTree = "<group>"; };
 		48A50A27198800CC00BF4F50 /* GetDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetDataController.m; path = GetDataController/GetDataController.m; sourceTree = "<group>"; };
@@ -128,10 +131,19 @@
 		483C84D71987FE83003CF408 /* Main View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				48562418199D270200D42DB1 /* PlaceDetailViewController.h */,
+				48562419199D270200D42DB1 /* PlaceDetailViewController.m */,
+			);
+			name = "Main View Controller";
+			sourceTree = "<group>";
+		};
+		4856241B199D270C00D42DB1 /* Place Detail View Controller */ = {
+			isa = PBXGroup;
+			children = (
 				48EA31E11976DE5F0063346A /* MainViewController.h */,
 				48EA31E21976DE5F0063346A /* MainViewController.m */,
 			);
-			name = "Main View Controller";
+			name = "Place Detail View Controller";
 			sourceTree = "<group>";
 		};
 		48A50A29198800D100BF4F50 /* Get Data Controller */ = {
@@ -226,6 +238,7 @@
 				48EA31D91976DE5F0063346A /* MainAppDelegate.m */,
 				48EA31DB1976DE5F0063346A /* Main_iPhone.storyboard */,
 				48EA31DE1976DE5F0063346A /* Main_iPad.storyboard */,
+				4856241B199D270C00D42DB1 /* Place Detail View Controller */,
 				483C84D71987FE83003CF408 /* Main View Controller */,
 				48A50A29198800D100BF4F50 /* Get Data Controller */,
 				48C0DD65198AB1A5001BD159 /* Map Annotation */,
@@ -379,6 +392,7 @@
 				48EA31E31976DE5F0063346A /* MainViewController.m in Sources */,
 				48A50A451988032D00BF4F50 /* AFURLRequestSerialization.m in Sources */,
 				48A50A411988032D00BF4F50 /* AFHTTPSessionManager.m in Sources */,
+				4856241A199D270200D42DB1 /* PlaceDetailViewController.m in Sources */,
 				48A50A421988032D00BF4F50 /* AFNetworkReachabilityManager.m in Sources */,
 				48A50A461988032D00BF4F50 /* AFURLResponseSerialization.m in Sources */,
 				48A50A471988032D00BF4F50 /* AFURLSessionManager.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "MapAnnotation.h"
+#import "PlaceDetailViewController.h"
 
 @interface MainViewController ()
 
@@ -18,7 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Init map view
     mainMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     mainMap.delegate = self;
@@ -108,16 +109,23 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    MKPinAnnotationView *newAnnotation;
-    if (![newAnnotation isKindOfClass:[MKUserLocation class]]) {
+    if (![annotation isKindOfClass:[MKUserLocation class]]) {
+        MKPinAnnotationView *newAnnotation;
         newAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
                                                         reuseIdentifier:@"pinLocation"];
         newAnnotation.canShowCallout = YES;
         newAnnotation.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        return newAnnotation;
     } else {
-        newAnnotation.canShowCallout = NO;
+        return nil;
     }
-    return newAnnotation;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc] init];
+    placeDetailViewController.title = view.annotation.title;
+    [self.navigationController pushViewController:placeDetailViewController animated:YES];
 }
 
 #pragma mark - All about get data controller delegate
@@ -146,6 +154,10 @@
         
     }else{
         searchResults = [receiveData objectForKey:@"results"];
+        if (![searchResults count]) {
+            searchResults = [[NSMutableArray alloc] initWithObjects:[[NSDictionary alloc] initWithObjectsAndKeys:@"查無資料，新增地點", @"name",nil], nil];
+        }
+        
         [searchResultTableView reloadData];
         [self showSearchTableView];
     
