@@ -304,7 +304,7 @@
         categoryView.alpha = 0;
         [self.view addSubview:categoryView];
         
-        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"車站"];
+        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"ATM提款機"];
         float lastButtonPosition = 0;
         for (int i = 0; i < [categoryName count]; i++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -342,7 +342,7 @@
     [self.view endEditing:YES];
     [self dismissCategoryView];
     
-    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe",nil];
+    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe",@"atm",nil];
     searchType = @"nearby";
     
     GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:currentLocation];

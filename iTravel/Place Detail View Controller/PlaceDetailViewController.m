@@ -104,6 +104,8 @@
         theGrayButton *button = [[theGrayButton alloc] initWithFrame:CGRectMake(xPosition, lastPosition, 98, 33)
                                                        AndButtonText:[displayButton objectAtIndex:i]];
         [self.view addSubview:button];
+        
+        //lastPosition = button.frame.origin.y + 43;
     }
     
 }
