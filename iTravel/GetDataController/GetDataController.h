@@ -27,9 +27,11 @@
 
 - (id) initWithDirectQuery:(CLLocation *)queryLocation;
 - (id) initWithSearchNearby:(CLLocation *)queryLocation;
+- (id)initWithSearchPlaceDetail:(NSString *)placeID;
 
 - (void) getData:(NSURL *)URL;
 - (void) searchFromKeyword:(NSString *)keyword;
 - (void) searchNearby:(NSString *)type;
+- (void) getPlaceDetail;
 
 @end

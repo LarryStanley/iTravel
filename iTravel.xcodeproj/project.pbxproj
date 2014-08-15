@@ -10,6 +10,9 @@
 		48089A741976DF4D00EBEB53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A731976DF4D00EBEB53 /* MapKit.framework */; };
 		48089A761976E0FE00EBEB53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A751976E0FE00EBEB53 /* CoreLocation.framework */; };
 		4856241A199D270200D42DB1 /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48562419199D270200D42DB1 /* PlaceDetailViewController.m */; };
+		4856241E199DD3E300D42DB1 /* theGrayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4856241D199DD3E300D42DB1 /* theGrayButton.m */; };
+		48562422199DD47D00D42DB1 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48562420199DD47D00D42DB1 /* Button@2x.png */; };
+		48562423199DD47D00D42DB1 /* ButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48562421199DD47D00D42DB1 /* ButtonSelected@2x.png */; };
 		48987B8D198A8C6E009A4D58 /* Location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 48987B8C198A8C6E009A4D58 /* Location.gpx */; };
 		48A50A28198800CC00BF4F50 /* GetDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A27198800CC00BF4F50 /* GetDataController.m */; };
 		48A50A3F1988032D00BF4F50 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A50A2D1988032D00BF4F50 /* AFHTTPRequestOperation.m */; };
@@ -55,6 +58,10 @@
 		48089A751976E0FE00EBEB53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		48562418199D270200D42DB1 /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = "Place Detail View Controller/PlaceDetailViewController.h"; sourceTree = "<group>"; };
 		48562419199D270200D42DB1 /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = "Place Detail View Controller/PlaceDetailViewController.m"; sourceTree = "<group>"; };
+		4856241C199DD3E300D42DB1 /* theGrayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = theGrayButton.h; path = "the Gray Button/theGrayButton.h"; sourceTree = "<group>"; };
+		4856241D199DD3E300D42DB1 /* theGrayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = theGrayButton.m; path = "the Gray Button/theGrayButton.m"; sourceTree = "<group>"; };
+		48562420199DD47D00D42DB1 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button@2x.png"; path = "the Gray Button/Button@2x.png"; sourceTree = "<group>"; };
+		48562421199DD47D00D42DB1 /* ButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonSelected@2x.png"; path = "the Gray Button/ButtonSelected@2x.png"; sourceTree = "<group>"; };
 		48987B8C198A8C6E009A4D58 /* Location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		48A50A26198800CC00BF4F50 /* GetDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetDataController.h; path = GetDataController/GetDataController.h; sourceTree = "<group>"; };
 		48A50A27198800CC00BF4F50 /* GetDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetDataController.m; path = GetDataController/GetDataController.m; sourceTree = "<group>"; };
@@ -144,6 +151,17 @@
 				48EA31E21976DE5F0063346A /* MainViewController.m */,
 			);
 			name = "Place Detail View Controller";
+			sourceTree = "<group>";
+		};
+		4856241F199DD3EA00D42DB1 /* the Gray Button */ = {
+			isa = PBXGroup;
+			children = (
+				4856241C199DD3E300D42DB1 /* theGrayButton.h */,
+				4856241D199DD3E300D42DB1 /* theGrayButton.m */,
+				48562420199DD47D00D42DB1 /* Button@2x.png */,
+				48562421199DD47D00D42DB1 /* ButtonSelected@2x.png */,
+			);
+			name = "the Gray Button";
 			sourceTree = "<group>";
 		};
 		48A50A29198800D100BF4F50 /* Get Data Controller */ = {
@@ -241,6 +259,7 @@
 				4856241B199D270C00D42DB1 /* Place Detail View Controller */,
 				483C84D71987FE83003CF408 /* Main View Controller */,
 				48A50A29198800D100BF4F50 /* Get Data Controller */,
+				4856241F199DD3EA00D42DB1 /* the Gray Button */,
 				48C0DD65198AB1A5001BD159 /* Map Annotation */,
 				48A50A481988033400BF4F50 /* AFNetworking */,
 				48EA31E41976DE5F0063346A /* Images.xcassets */,
@@ -365,6 +384,8 @@
 				48EA31DD1976DE5F0063346A /* Main_iPhone.storyboard in Resources */,
 				48F51C9F199CE8EB00F340E3 /* currentLocationButton.png in Resources */,
 				48EA31D41976DE5F0063346A /* InfoPlist.strings in Resources */,
+				48562422199DD47D00D42DB1 /* Button@2x.png in Resources */,
+				48562423199DD47D00D42DB1 /* ButtonSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +414,7 @@
 				48A50A451988032D00BF4F50 /* AFURLRequestSerialization.m in Sources */,
 				48A50A411988032D00BF4F50 /* AFHTTPSessionManager.m in Sources */,
 				4856241A199D270200D42DB1 /* PlaceDetailViewController.m in Sources */,
+				4856241E199DD3E300D42DB1 /* theGrayButton.m in Sources */,
 				48A50A421988032D00BF4F50 /* AFNetworkReachabilityManager.m in Sources */,
 				48A50A461988032D00BF4F50 /* AFURLResponseSerialization.m in Sources */,
 				48A50A471988032D00BF4F50 /* AFURLSessionManager.m in Sources */,

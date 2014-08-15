@@ -27,6 +27,15 @@
     return self;
 }
 
+- (id)initWithSearchPlaceDetail:(NSString *)placeID
+{
+    self = [super init];
+    if (self) {
+        baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",placeID];
+    }
+    return self;
+}
+
 - (void)getData:(NSURL *)URL{
     __block NSDictionary *results;
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
@@ -58,6 +67,14 @@
     
     [self getData:[NSURL URLWithString:advancedURL]];
 
+}
+
+- (void) getPlaceDetail
+{
+    NSString *advancedURL = baseURL;
+    advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [self getData:[NSURL URLWithString:advancedURL]];
 }
 
 @end

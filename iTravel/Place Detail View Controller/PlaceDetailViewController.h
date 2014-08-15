@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "GetDataController.h"
 
-@interface PlaceDetailViewController : UIViewController
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, GetDataControllerDelegate>
+{
+    MKMapView *topMapView;
+    NSDictionary *placeData;
+}
+
+@property (nonatomic, strong) NSDictionary *placeData;
 
 @end

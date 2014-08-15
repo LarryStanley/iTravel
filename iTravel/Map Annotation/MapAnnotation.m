@@ -13,6 +13,6 @@
 @synthesize title;
 @synthesize subtitle;
 @synthesize coordinate;
-
+@synthesize tag;
 
 @end

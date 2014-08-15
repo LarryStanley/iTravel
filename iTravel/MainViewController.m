@@ -123,8 +123,10 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
+    MapAnnotation *mapAnnotation = view.annotation;
     PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc] init];
     placeDetailViewController.title = view.annotation.title;
+    placeDetailViewController.placeData = [searchResults objectAtIndex:mapAnnotation.tag];
     [self.navigationController pushViewController:placeDetailViewController animated:YES];
 }
 
@@ -136,13 +138,14 @@
     
     if ([searchType isEqualToString:@"nearby"]) {
         
-        NSMutableArray *data = [receiveData objectForKey:@"results"];
-        for (int i = 0; i < [data count]; i++) {
-            NSDictionary *placeData = [data objectAtIndex:i];
+        searchResults = [receiveData objectForKey:@"results"];
+        for (int i = 0; i < [searchResults count]; i++) {
+            NSDictionary *placeData = [searchResults objectAtIndex:i];
             
             MapAnnotation *mapAnnotation = [[MapAnnotation alloc] init];
             mapAnnotation.title = [placeData objectForKey:@"name"];
             mapAnnotation.subtitle = [placeData objectForKey:@"vicinity"];
+            mapAnnotation.tag = i;
             mapAnnotation.coordinate = CLLocationCoordinate2DMake([[[[placeData objectForKey:@"geometry"]
                                                                      objectForKey:@"location"]
                                                                     objectForKey:@"lat"] floatValue],
@@ -286,6 +289,7 @@
     mapAnnotation.title = [selectData objectForKey:@"name"];
     mapAnnotation.subtitle = [selectData objectForKey:@"vicinity"];
     mapAnnotation.coordinate = selectCoordinate;
+    mapAnnotation.tag = indexPath.row;
     [mainMap addAnnotation:mapAnnotation];
     
 }
