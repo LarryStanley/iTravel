@@ -82,9 +82,10 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     if (newLocation != oldLocation) {
-        [self changeMapCenter:newLocation.coordinate];
+        if (!currentLocation)
+            [self changeMapCenter:newLocation.coordinate];
         
-        [locationManager stopUpdatingLocation];
+        //[locationManager stopUpdatingLocation];
         currentLocation = newLocation;
     }
 }

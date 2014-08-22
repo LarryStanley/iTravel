@@ -24,7 +24,7 @@
 {
     self = [super init];
     if (self) {
-        baseURL = [NSString stringWithFormat:@"http://140.115.156.63:8983/solr/collection1/select?&wt=json&indent=true&pt=%f,%f&d=1&sfield=store&sort=geodist()%%20asc",queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
+        baseURL = [NSString stringWithFormat:@"http://140.115.156.64:8983/solr/collection1/select?&wt=json&indent=true&pt=%f,%f&d=1&sfield=store&sort=geodist()%%20asc",queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
         serverLocation = @"NCU";
     }
     return self;
