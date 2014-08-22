@@ -44,7 +44,7 @@
     topMapView.delegate = self;
     topMapView.showsUserLocation = YES;
     [self.view addSubview:topMapView];
-    CLLocationCoordinate2D placeCoordinate = CLLocationCoordinate2DMake([[[[placeData objectForKey:@"geometry"]
+    placeCoordinate = CLLocationCoordinate2DMake([[[[placeData objectForKey:@"geometry"]
                                                                           objectForKey:@"location"]
                                                                          objectForKey:@"lat"] floatValue],
                                                                        [[[[placeData objectForKey:@"geometry"]
@@ -73,9 +73,9 @@
 
 - (void)getDataController:(GetDataController *)controller didFinishReceiveData:(NSDictionary *)receiveData
 {
-    NSDictionary *detailData = [receiveData objectForKey:@"result"];
+    detailData = [receiveData objectForKey:@"result"];
     NSArray *displayInfo = @[[placeData objectForKey:@"name"],
-                             [placeData objectForKey:@"vicinity"],
+                             [detailData objectForKey:@"formatted_address"],
                              [detailData objectForKey:@"formatted_phone_number"]];
     int lastPosition = 210;
     
@@ -103,6 +103,8 @@
         }
         theGrayButton *button = [[theGrayButton alloc] initWithFrame:CGRectMake(xPosition, lastPosition, 98, 33)
                                                        AndButtonText:[displayButton objectAtIndex:i]];
+        button.tag = i;
+        [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
         
         //lastPosition = button.frame.origin.y + 43;
@@ -121,6 +123,21 @@
     region.span.longitudeDelta = 0.005;
     
     [topMapView setRegion:region animated:YES];
+}
+
+#pragma mark - All about butto method
+
+- (void)buttonPressed:(UIButton *)button
+{
+    switch (button.tag) {
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com/?q=%f,%f", placeCoordinate.latitude, placeCoordinate.longitude]]];
+            break;
+            
+        default:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[detailData objectForKey:@"formatted_phone_number"]]];
+            break;
+    }
 }
 
 @end

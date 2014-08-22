@@ -156,15 +156,33 @@
         }
         
     }else{
-        searchResults = [receiveData objectForKey:@"results"];
-        if (![searchResults count]) {
-            searchResults = [[NSMutableArray alloc] initWithObjects:[[NSDictionary alloc] initWithObjectsAndKeys:@"查無資料，新增地點", @"name",nil], nil];
+        if ([controller.serverLocation isEqualToString:@"NCU"]) {
+            NSMutableArray *allData = [receiveData objectForKey:@"response"];
+            for (int i = 0 ; i < [allData count]; i++) {
+                NSDictionary *tempData = [allData objectAtIndex:i];
+                NSMutableDictionary *placeData = [[NSMutableDictionary alloc] init];
+                [placeData setObject:[tempData objectForKey:@"title"] forKey:@"name"];
+                [placeData setObject:[tempData objectForKey:@"address"] forKey:@"vicinity"];
+                [placeData setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[tempData objectForKey:@"longitude"], @"lng", @"latitude", @"lat",nil]
+                              forKey:@"geometry"];
+                
+                [searchResults addObject:placeData];
+            }
+            if (![searchResults count]) {
+                searchResults = [[NSMutableArray alloc] initWithObjects:[[NSDictionary alloc] initWithObjectsAndKeys:@"查無資料，新增地點", @"name",nil], nil];
+            }
+            
+            [searchResultTableView reloadData];
+            [self showSearchTableView];
+            
+            [self.view addSubview:searchResultTableView];
+        }else{
+            searchResults = [receiveData objectForKey:@"results"];
+            
+            GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
+            getDataController.delegate = self;
+            [getDataController searchFromKeyWordWithNCU:topSearchBar.text];
         }
-        
-        [searchResultTableView reloadData];
-        [self showSearchTableView];
-    
-        [self.view addSubview:searchResultTableView];
     }
 }
 

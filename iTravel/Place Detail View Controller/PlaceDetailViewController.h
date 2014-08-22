@@ -13,9 +13,12 @@
 @interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, GetDataControllerDelegate>
 {
     MKMapView *topMapView;
-    NSDictionary *placeData;
+    NSMutableDictionary *placeData, *detailData;
+    CLLocationCoordinate2D placeCoordinate;
 }
 
 @property (nonatomic, strong) NSDictionary *placeData;
+
+- (void)buttonPressed:(UIButton *)button;
 
 @end
