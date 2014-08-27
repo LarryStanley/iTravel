@@ -206,7 +206,9 @@
     searchResultTableView.delegate = self;
     searchResultTableView.dataSource = self;
     searchResultTableView.alpha = 0;
+    
     searchResultTableView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
+    searchResultTableView.separatorColor = [UIColor colorWithRed:60/255.f green:67/255.f blue:77/255.f alpha:1];
     
     searchResults = [[NSMutableArray alloc] init];
     
@@ -284,8 +286,11 @@
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.detailTextLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"formatted_address"];
+    
     cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor colorWithRed:34/255.f green:153/255.f blue:240/255.f alpha:1];
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
     
     return cell;
 }

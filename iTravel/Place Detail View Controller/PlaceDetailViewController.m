@@ -88,7 +88,10 @@
         else
             lable.font = [UIFont systemFontOfSize:16];
         [lable sizeToFit];
-        lable.textColor = [UIColor whiteColor];
+        if (!i)
+            lable.textColor = [UIColor colorWithRed:34/255.f green:153/255.f blue:253/255.f alpha:1];
+        else
+            lable.textColor = [UIColor whiteColor];
         lable.frame = CGRectMake(0, lastPosition, self.view.frame.size.width, lable.frame.size.height);
         lable.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:lable];
