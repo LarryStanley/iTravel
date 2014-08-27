@@ -318,12 +318,17 @@
 - (void)showCategoryView
 {
     if (!categoryView) {
+        
         categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, 84, 300, 60)];
         categoryView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
         categoryView.alpha = 0;
         [self.view addSubview:categoryView];
         
-        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"ATM提款機"];
+        // Set scroll view
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
+        [categoryView addSubview:scrollView];
+        
+        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"加油站", @"麵包店",@"ATM提款機"];
         float lastButtonPosition = 0;
         for (int i = 0; i < [categoryName count]; i++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -333,10 +338,12 @@
             [button sizeToFit];
             button.tintColor = [UIColor whiteColor];
             button.frame = CGRectMake(lastButtonPosition + 20, 0, button.frame.size.width, 60);
-            [categoryView addSubview:button];
+            [scrollView addSubview:button];
             
             lastButtonPosition = button.frame.origin.x + button.frame.size.width;
         }
+        
+        scrollView.contentSize = CGSizeMake(lastButtonPosition + 20, 60);
     }
     
     [UIView beginAnimations:nil context:nil];
@@ -361,7 +368,7 @@
     [self.view endEditing:YES];
     [self dismissCategoryView];
     
-    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe",@"atm",nil];
+    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe", @"gas_station", @"bakery",@"atm",nil];
     searchType = @"nearby";
     
     GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:currentLocation];
