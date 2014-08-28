@@ -333,7 +333,7 @@
         UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
         [categoryView addSubview:scrollView];
         
-        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"加油站", @"麵包店",@"ATM提款機"];
+        NSArray *categoryName = @[@"餐廳", @"咖啡廳", @"加油站", @"麵包店", @"電影院",@"ATM提款機"];
         float lastButtonPosition = 0;
         for (int i = 0; i < [categoryName count]; i++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -373,7 +373,7 @@
     [self.view endEditing:YES];
     [self dismissCategoryView];
     
-    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe", @"gas_station", @"bakery",@"atm",nil];
+    NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe", @"gas_station", @"bakery", @"movie_theater",@"atm",nil];
     searchType = @"nearby";
     
     GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:currentLocation];
