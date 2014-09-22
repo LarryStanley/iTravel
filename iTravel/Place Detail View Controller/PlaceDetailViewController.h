@@ -15,6 +15,8 @@
     MKMapView *topMapView;
     NSMutableDictionary *placeData, *detailData;
     CLLocationCoordinate2D placeCoordinate;
+    UIWebView *imageWebView;
+    UIScrollView *scrollView;
 }
 
 @property (nonatomic, strong) NSDictionary *placeData;

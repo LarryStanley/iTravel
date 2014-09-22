@@ -10,29 +10,29 @@
 	<string>iTravel</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C3584910-5282-4B07-8304-9D5C118CE1E1</key>
+		<key>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</key>
 		<string>https://github.com/LarryStanley/iTravel.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>iTravel.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C3584910-5282-4B07-8304-9D5C118CE1E1</key>
+		<key>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/LarryStanley/iTravel.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C3584910-5282-4B07-8304-9D5C118CE1E1</string>
+	<string>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C3584910-5282-4B07-8304-9D5C118CE1E1</string>
+			<string>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>iTravel</string>
 		</dict>

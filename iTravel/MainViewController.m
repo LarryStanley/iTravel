@@ -66,6 +66,11 @@
     [locationManager startUpdatingLocation];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.view bringSubviewToFront:topSearchBar];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

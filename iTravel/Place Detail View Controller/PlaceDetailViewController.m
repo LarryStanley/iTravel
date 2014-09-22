@@ -57,6 +57,11 @@
     mapAnnotation.subtitle = [placeData objectForKey:@"vicinity"];
     [topMapView addAnnotation:mapAnnotation];
     
+    // Set UIScrollView
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, self.view.frame.size.height - 200)];
+    scrollView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:scrollView];
+    
     // Get place detail
     GetDataController *getDataController = [[GetDataController alloc] initWithSearchPlaceDetail:[placeData objectForKey:@"reference"]];
     getDataController.delegate = self;
@@ -77,7 +82,7 @@
     NSArray *displayInfo = @[[placeData objectForKey:@"name"],
                              [detailData objectForKey:@"formatted_address"],
                              [detailData objectForKey:@"formatted_phone_number"]];
-    int lastPosition = 210;
+    int lastPosition = 10;
     
     for (int i = 0; i < [displayInfo count]; i++) {
         UILabel *lable = [[UILabel alloc] init];
@@ -94,7 +99,7 @@
             lable.textColor = [UIColor whiteColor];
         lable.frame = CGRectMake(0, lastPosition, self.view.frame.size.width, lable.frame.size.height);
         lable.textAlignment = NSTextAlignmentCenter;
-        [self.view addSubview:lable];
+        [scrollView addSubview:lable];
         lastPosition = lable.frame.origin.y + lable.frame.size.height + 10;
     }
     
@@ -108,11 +113,21 @@
                                                        AndButtonText:[displayButton objectAtIndex:i]];
         button.tag = i;
         [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:button];
+        [scrollView addSubview:button];
         
         //lastPosition = button.frame.origin.y + 43;
     }
     
+    imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
+    imageWebView.backgroundColor = [UIColor clearColor];
+    imageWebView.scalesPageToFit = NO;
+    imageWebView.scrollView.scrollEnabled = NO;
+    imageWebView.scrollView.bounces = NO;
+    [imageWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:
+                                                            [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",
+                                                            [[[detailData objectForKey:@"photos"] objectAtIndex:0] objectForKey:@"photo_reference"]]]]];
+    [scrollView addSubview:imageWebView];
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lastPosition + 360);
 }
 
 #pragma mark - All about map view delegate

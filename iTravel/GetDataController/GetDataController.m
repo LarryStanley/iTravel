@@ -47,6 +47,7 @@
     if (self) {
         baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",placeID];
         serverLocation  = @"google";
+        NSLog(@"%@",baseURL);
     }
     return self;
 }
