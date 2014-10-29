@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GetDataController.h"
 
-@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 {
     NSString *searchType;
     
@@ -26,6 +26,9 @@
     UIView *categoryView;
     
     UIButton *currentLocationButton;
+    UIButton *showAllNearbyButton;
+    
+    UIView *nearbyIllustratorView;
 }
 
 - (void)showCurrentLocation;
@@ -37,6 +40,8 @@
 
 - (void)showCategoryView;
 - (void)dismissCategoryView;
+
+- (void)showAllResultFromNearby;
 
 - (void)categoryButtonPress:(UIButton *)button;
 

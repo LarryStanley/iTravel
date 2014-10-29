@@ -55,7 +55,7 @@
     [self.view addSubview:currentLocationButton];
     
     
-    [mainMap addSubview:topSearchBar];
+    [self.view addSubview:topSearchBar];
     
     // Init location manager
     locationManager = [[CLLocationManager alloc] init];
@@ -68,7 +68,26 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self.view bringSubviewToFront:topSearchBar];
+    [topSearchBar removeFromSuperview];
+    
+    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, 300, 44)];
+    topSearchBar.delegate = self;
+    topSearchBar.placeholder = @"搜尋附近地區";
+    // Set Search Bar Interface
+    [topSearchBar setBarTintColor:[UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1]];
+    for (UIView *subView in topSearchBar.subviews) {
+        for (UIView *subSubView in subView.subviews) {
+            if ([subSubView isKindOfClass:[UITextField class]]) {
+                UITextField *textField = (UITextField *)subSubView;
+                textField.backgroundColor = [UIColor clearColor];
+                textField.textColor = [UIColor whiteColor];
+                break;
+            }
+            
+        }
+    }
+
+    [self.view addSubview:topSearchBar];
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,7 +160,6 @@
 - (void)getDataController:(GetDataController *)controller didFinishReceiveData:(NSDictionary *)receiveData
 {
     [mainMap removeAnnotations:mainMap.annotations];
-    
     if ([searchType isEqualToString:@"nearby"]) {
         
         searchResults = [receiveData objectForKey:@"results"];
@@ -159,6 +177,48 @@
                                                                      objectForKey:@"location"]
                                                                     objectForKey:@"lng"] floatValue]);
             [mainMap addAnnotation:mapAnnotation];
+            
+            if (!showAllNearbyButton){
+                showAllNearbyButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 84, 300, 44)];
+                showAllNearbyButton.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
+                [showAllNearbyButton setTitle:@"列出所有結果" forState:UIControlStateNormal];
+                [showAllNearbyButton addTarget:self action:@selector(showAllResultFromNearby) forControlEvents:UIControlEventTouchUpInside];
+                [self.view addSubview:showAllNearbyButton];
+            } else {
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:0.2];
+                showAllNearbyButton.alpha = 1;
+                [UIView commitAnimations];
+            }
+            
+            
+            /*[nearbyIllustratorView removeFromSuperview];
+            nearbyIllustratorView = [[UIView alloc] initWithFrame:CGRectMake(50, self.view.frame.size.height - 64, self.view.frame.size.width - 100, 54)];
+            nearbyIllustratorView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
+            nearbyIllustratorView.alpha = 0;
+            
+            UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 220 * [searchResults count], 54)];
+            [scrollView setPagingEnabled:YES];
+            [scrollView setShowsHorizontalScrollIndicator:NO];
+            [scrollView setShowsVerticalScrollIndicator:NO];
+            [scrollView setScrollsToTop:NO];
+            [scrollView setDelegate:self];
+            
+            
+            
+            UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 24, 220, 30)];
+            [pageControl setNumberOfPages:[searchResults count]];
+            [pageControl setCurrentPage:0];
+            
+            [self.view addSubview:nearbyIllustratorView];
+            [nearbyIllustratorView addSubview:scrollView];
+            [nearbyIllustratorView addSubview:pageControl];
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.2];
+            nearbyIllustratorView.alpha = 1;
+            [UIView commitAnimations];*/
+            
         }
         
     }else{
@@ -174,6 +234,14 @@
                 
                 [searchResults addObject:placeData];
             }
+        }else{
+            
+            searchResults = [receiveData objectForKey:@"results"];
+            
+            /*GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
+            getDataController.delegate = self;
+            [getDataController searchFromKeyWordWithNCU:topSearchBar.text];*/
+            
             if (![searchResults count]) {
                 searchResults = [[NSMutableArray alloc] initWithObjects:[[NSDictionary alloc] initWithObjectsAndKeys:@"查無資料，新增地點", @"name",nil], nil];
             }
@@ -182,14 +250,22 @@
             [self showSearchTableView];
             
             [self.view addSubview:searchResultTableView];
-        }else{
-            searchResults = [receiveData objectForKey:@"results"];
-            
-            GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
-            getDataController.delegate = self;
-            [getDataController searchFromKeyWordWithNCU:topSearchBar.text];
+    
         }
     }
+}
+
+- (void)showAllResultFromNearby
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    showAllNearbyButton.alpha  = 0;
+    [UIView commitAnimations];
+    
+    [searchResultTableView reloadData];
+    [self showSearchTableView];
+    
+    [self.view addSubview:searchResultTableView];
 }
 
 #pragma mark - All about UISearchBar delegate
@@ -207,7 +283,7 @@
         }
     }
 
-    searchResultTableView = [[UITableView alloc] initWithFrame:CGRectMake( 10, 84, 300, self.view.frame.size.height - 84)];
+    searchResultTableView = [[UITableView alloc] initWithFrame:CGRectMake( 10, 84, 300, self.view.frame.size.height - 94)];
     searchResultTableView.delegate = self;
     searchResultTableView.dataSource = self;
     searchResultTableView.alpha = 0;
@@ -227,6 +303,8 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    searchType = @"directly";
+    
     if (searchText.length > 0) {
         GetDataController *getDataController = [[GetDataController alloc] initWithDirectQuery:currentLocation];
         getDataController.delegate = self;
@@ -255,6 +333,11 @@
 
 - (void)showSearchTableView
 {
+    if ([searchResults count] * 44 > self.view.frame.size.height - 94)
+        searchResultTableView.frame = CGRectMake(10, 84, 300, self.view.frame.size.height - 94);
+    else
+        searchResultTableView.frame = CGRectMake(10, 84, 300, 44*[searchResults count]);
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
     searchResultTableView.alpha = 1;
@@ -271,7 +354,7 @@
 
 #pragma mark - All about search table view delegate and datasource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
@@ -318,7 +401,7 @@
     mapAnnotation.title = [selectData objectForKey:@"name"];
     mapAnnotation.subtitle = [selectData objectForKey:@"vicinity"];
     mapAnnotation.coordinate = selectCoordinate;
-    mapAnnotation.tag = indexPath.row;
+    mapAnnotation.tag = (int)indexPath.row;
     [mainMap addAnnotation:mapAnnotation];
     
 }
@@ -359,6 +442,7 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
     categoryView.alpha = 1;
+    showAllNearbyButton.alpha  = 0;
     [UIView commitAnimations];
 }
 
@@ -375,9 +459,10 @@
 
 - (void)categoryButtonPress:(UIButton *)button;
 {
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
     [self dismissCategoryView];
-    
+    [self.view endEditing:YES];
+
     NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe", @"gas_station", @"bakery", @"movie_theater",@"atm",nil];
     searchType = @"nearby";
     

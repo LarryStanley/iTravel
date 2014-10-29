@@ -14,7 +14,7 @@
 		<string>https://github.com/LarryStanley/iTravel.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iTravel.xcodeproj/project.xcworkspace</string>
+	<string>iTravel.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</key>

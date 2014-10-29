@@ -127,7 +127,7 @@
                                                             [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",
                                                             [[[detailData objectForKey:@"photos"] objectAtIndex:0] objectForKey:@"photo_reference"]]]]];
     [scrollView addSubview:imageWebView];
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lastPosition + 360);
+    //scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lastPosition + 360);
 }
 
 #pragma mark - All about map view delegate
