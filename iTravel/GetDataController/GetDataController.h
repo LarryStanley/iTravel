@@ -32,10 +32,13 @@
 - (id) initWithDirectQueryFromNCU:(CLLocation *)queryLocation;
 - (id) initWithSearchNearby:(CLLocation *)queryLocation;
 - (id) initWithSearchPlaceDetail:(NSString *)placeID;
+- (id) initWithAutocomplete:(CLLocation *)queryLocation;
+
 
 - (void) getData:(NSURL *)URL;
 - (void) searchFromKeyword:(NSString *)keyword;
 - (void) searchFromKeyWordWithNCU:(NSString *)keyword;
+- (void) SearchWithAutoComplete:(NSString *)keyword;
 - (void) searchNearby:(NSString *)type;
 - (void) getPlaceDetail;
 

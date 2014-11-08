@@ -52,6 +52,17 @@
     return self;
 }
 
+- (id) initWithAutocomplete:(CLLocation *)queryLocation
+{
+    self = [super init];
+    if (self) {
+        baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI&location=%f,%f", queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
+        serverLocation  = @"google";
+        NSLog(@"%@",baseURL);
+    }
+    return self;
+}
+
 - (void)getData:(NSURL *)URL{
     __block NSDictionary *results;
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
@@ -95,6 +106,14 @@
 - (void) getPlaceDetail
 {
     NSString *advancedURL = baseURL;
+    advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [self getData:[NSURL URLWithString:advancedURL]];
+}
+
+- (void)SearchWithAutoComplete:(NSString *)keyword
+{
+    NSString *advancedURL = [baseURL stringByAppendingString:[NSString stringWithFormat:@"&input=%@",keyword]];
     advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [self getData:[NSURL URLWithString:advancedURL]];

@@ -101,6 +101,8 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"No singal");
+    currentLocation = [[CLLocation alloc] initWithLatitude:25.052027 longitude:121.539594];
+    [self changeMapCenter:currentLocation.coordinate];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -108,7 +110,7 @@
     if (newLocation != oldLocation) {
         if (!currentLocation)
             [self changeMapCenter:newLocation.coordinate];
-        
+        NSLog(@"yes");
         //[locationManager stopUpdatingLocation];
         currentLocation = newLocation;
     }
@@ -236,7 +238,7 @@
             }
         }else{
             
-            searchResults = [receiveData objectForKey:@"results"];
+            searchResults = [receiveData objectForKey:@"predictions"];
             
             /*GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
             getDataController.delegate = self;
@@ -306,9 +308,9 @@
     searchType = @"directly";
     
     if (searchText.length > 0) {
-        GetDataController *getDataController = [[GetDataController alloc] initWithDirectQuery:currentLocation];
+        GetDataController *getDataController = [[GetDataController alloc] initWithAutocomplete:currentLocation];
+        [getDataController SearchWithAutoComplete:searchText];
         getDataController.delegate = self;
-        [getDataController searchFromKeyword:searchText];
         
         [self dismissCategoryView];
     }else{
@@ -373,8 +375,8 @@
     }
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
-    cell.detailTextLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"formatted_address"];
+    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"description"];
+    //cell.detailTextLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"formatted_address"];
     
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor colorWithRed:34/255.f green:153/255.f blue:240/255.f alpha:1];
