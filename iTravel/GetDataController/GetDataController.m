@@ -56,7 +56,7 @@
 {
     self = [super init];
     if (self) {
-        baseURL = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI&location=%f,%f", queryLocation.coordinate.latitude, queryLocation.coordinate.longitude];
+        baseURL = [NSString stringWithFormat:@"http://140.115.156.70:91/crawlerPredictionHtml.aspx?query="];
         serverLocation  = @"google";
         NSLog(@"%@",baseURL);
     }
@@ -113,7 +113,7 @@
 
 - (void)SearchWithAutoComplete:(NSString *)keyword
 {
-    NSString *advancedURL = [baseURL stringByAppendingString:[NSString stringWithFormat:@"&input=%@",keyword]];
+    NSString *advancedURL = [baseURL stringByAppendingString:[NSString stringWithFormat:@"%@",keyword]];
     advancedURL = [advancedURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [self getData:[NSURL URLWithString:advancedURL]];

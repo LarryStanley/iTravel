@@ -238,7 +238,8 @@
             }
         }else{
             
-            searchResults = [receiveData objectForKey:@"predictions"];
+            searchResults = [receiveData objectForKey:@"GoogleMapSuggestion"];
+            NSLog(@"%@",searchResults);
             
             /*GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
             getDataController.delegate = self;
@@ -375,7 +376,7 @@
     }
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"description"];
+    cell.textLabel.text = [searchResults objectAtIndex:indexPath.row];
     //cell.detailTextLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"formatted_address"];
     
     cell.backgroundColor = [UIColor clearColor];
