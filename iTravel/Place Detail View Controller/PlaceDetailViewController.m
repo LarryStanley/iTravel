@@ -15,7 +15,7 @@
 @end
 
 @implementation PlaceDetailViewController
-@synthesize placeData;
+@synthesize placeData, placeReference;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,9 +63,55 @@
     [self.view addSubview:scrollView];
     
     // Get place detail
-    GetDataController *getDataController = [[GetDataController alloc] initWithSearchPlaceDetail:[placeData objectForKey:@"reference"]];
-    getDataController.delegate = self;
-    [getDataController getPlaceDetail];
+    detailData = placeData;
+    NSArray *displayInfo = [[NSArray alloc] initWithObjects:[placeData objectForKey:@"name"],
+                                                            [placeData objectForKey:@"formatted_address"],
+                                                            [placeData objectForKey:@"formatted_phone_number"], nil];
+    int lastPosition = 10;
+    
+    for (int i = 0; i < [displayInfo count]; i++) {
+        UILabel *lable = [[UILabel alloc] init];
+        lable.text = [displayInfo objectAtIndex:i];
+        lable.backgroundColor = [UIColor clearColor];
+        if (!i)
+            lable.font = [UIFont systemFontOfSize:24];
+        else
+            lable.font = [UIFont systemFontOfSize:16];
+        [lable sizeToFit];
+        if (!i)
+            lable.textColor = [UIColor colorWithRed:34/255.f green:153/255.f blue:253/255.f alpha:1];
+        else
+            lable.textColor = [UIColor whiteColor];
+        lable.frame = CGRectMake(0, lastPosition, self.view.frame.size.width, lable.frame.size.height);
+        lable.textAlignment = NSTextAlignmentCenter;
+        [scrollView addSubview:lable];
+        lastPosition = lable.frame.origin.y + lable.frame.size.height + 10;
+    }
+    
+    NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+    for (int i = 0; i < [displayButton count]; i++) {
+        int xPosition = self.view.frame.size.width/2 - 108;
+        if (i%2) {
+            xPosition += 118;
+        }
+        theGrayButton *button = [[theGrayButton alloc] initWithFrame:CGRectMake(xPosition, lastPosition, 98, 33)
+                                                       AndButtonText:[displayButton objectAtIndex:i]];
+        button.tag = i;
+        [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [scrollView addSubview:button];
+        
+        //lastPosition = button.frame.origin.y + 43;
+    }
+    
+    imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
+    imageWebView.backgroundColor = [UIColor clearColor];
+    imageWebView.scalesPageToFit = NO;
+    imageWebView.scrollView.scrollEnabled = NO;
+    imageWebView.scrollView.bounces = NO;
+    [imageWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:
+                                                            [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",
+                                                             [[[detailData objectForKey:@"photos"] objectAtIndex:0] objectForKey:@"photo_reference"]]]]];
+    [scrollView addSubview:imageWebView];
 }
 
 - (void)didReceiveMemoryWarning

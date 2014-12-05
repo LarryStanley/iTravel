@@ -153,7 +153,7 @@
     MapAnnotation *mapAnnotation = view.annotation;
     PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc] init];
     placeDetailViewController.title = view.annotation.title;
-    placeDetailViewController.placeData = [searchResults objectAtIndex:mapAnnotation.tag];
+    placeDetailViewController.placeData = mapAnnotation.data;
     [self.navigationController pushViewController:placeDetailViewController animated:YES];
 }
 
@@ -223,6 +223,25 @@
             
         }
         
+    }else if ([searchType isEqualToString:@"detail"]){
+        
+        NSDictionary *data = [receiveData objectForKey:@"result"];
+
+        CLLocationCoordinate2D selectCoordinate = CLLocationCoordinate2DMake( [[[[data objectForKey:@"geometry"]
+                                                                                    objectForKey:@"location"]
+                                                                                    objectForKey:@"lat"] floatValue],
+                                                                                [[[[data objectForKey:@"geometry"]
+                                                                                    objectForKey:@"location"]
+                                                                                    objectForKey:@"lng"] floatValue]);
+        [self changeMapCenter:selectCoordinate];
+
+        MapAnnotation *mapAnnotation = [[MapAnnotation alloc] init];
+        mapAnnotation.title = [data objectForKey:@"name"];
+        mapAnnotation.subtitle = [data objectForKey:@"vicinity"];
+        mapAnnotation.coordinate = selectCoordinate;
+        mapAnnotation.data = data;
+        
+        [mainMap addAnnotation:mapAnnotation];
     }else{
         if ([controller.serverLocation isEqualToString:@"NCU"]) {
             NSMutableArray *allData = [receiveData objectForKey:@"response"];
@@ -239,7 +258,7 @@
         }else{
             
             searchResults = [receiveData objectForKey:@"GoogleMapSuggestion"];
-            NSLog(@"%@",searchResults);
+            searchResultsReference = [receiveData objectForKey:@"reference"];
             
             /*GetDataController *getDataController = [[GetDataController alloc] initWithDirectQueryFromNCU:currentLocation];
             getDataController.delegate = self;
@@ -391,22 +410,11 @@
     [self hideSearchTableView];
     [self.view endEditing:YES];
     
-    NSDictionary *selectData = [searchResults objectAtIndex:indexPath.row];
-    CLLocationCoordinate2D selectCoordinate = CLLocationCoordinate2DMake( [[[[selectData objectForKey:@"geometry"]
-                                                                             objectForKey:@"location"]
-                                                                            objectForKey:@"lat"] floatValue],
-                                                                         [[[[selectData objectForKey:@"geometry"]
-                                                                            objectForKey:@"location"]
-                                                                           objectForKey:@"lng"] floatValue]);
-    [self changeMapCenter:selectCoordinate];
+    searchType = @"detail";
     
-    MapAnnotation *mapAnnotation = [[MapAnnotation alloc] init];
-    mapAnnotation.title = [selectData objectForKey:@"name"];
-    mapAnnotation.subtitle = [selectData objectForKey:@"vicinity"];
-    mapAnnotation.coordinate = selectCoordinate;
-    mapAnnotation.tag = (int)indexPath.row;
-    [mainMap addAnnotation:mapAnnotation];
-    
+    GetDataController *getDataController = [[GetDataController alloc] initWithSearchPlaceDetail:[searchResultsReference objectAtIndex:indexPath.row]];
+    getDataController.delegate = self;
+    [getDataController getPlaceDetail];
 }
 
 #pragma mark - All about category view

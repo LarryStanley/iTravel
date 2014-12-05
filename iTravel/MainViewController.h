@@ -22,6 +22,7 @@
     
     UITableView *searchResultTableView;
     NSMutableArray *searchResults;
+    NSMutableArray *searchResultsReference;
     
     UIView *categoryView;
     

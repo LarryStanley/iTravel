@@ -14,12 +14,14 @@
 {
     MKMapView *topMapView;
     NSMutableDictionary *placeData, *detailData;
+    NSString *placeReference;
     CLLocationCoordinate2D placeCoordinate;
     UIWebView *imageWebView;
     UIScrollView *scrollView;
 }
 
 @property (nonatomic, strong) NSDictionary *placeData;
+@property (nonatomic, strong) NSString *placeReference;
 
 - (void)buttonPressed:(UIButton *)button;
 
