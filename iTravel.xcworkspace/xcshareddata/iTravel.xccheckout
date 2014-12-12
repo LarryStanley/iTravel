@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F55E57B6-65C2-4A30-8864-6AA667C44793</string>
+	<key>IDESourceControlProjectName</key>
+	<string>iTravel</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</key>
+		<string>https://github.com/LarryStanley/iTravel.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iTravel.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/LarryStanley/iTravel.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D4E1D7DFD8E8645175004D5FF2412E93FF31189F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iTravel</string>
+		</dict>
+	</array>
+</dict>
+</plist>
