@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "MapAnnotation.h"
 #import "PlaceDetailViewController.h"
+#import "FMDatabase.h"
 
 @interface MainViewController ()
 
@@ -110,7 +111,6 @@
     if (newLocation != oldLocation) {
         if (!currentLocation)
             [self changeMapCenter:newLocation.coordinate];
-        NSLog(@"yes");
         //[locationManager stopUpdatingLocation];
         currentLocation = newLocation;
     }
@@ -423,7 +423,7 @@
 {
     if (!categoryView) {
         
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, 84, 300, 60)];
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, 84, 300, 105)];
         categoryView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
         categoryView.alpha = 0;
         [self.view addSubview:categoryView];
@@ -449,6 +449,15 @@
         
         scrollView.contentSize = CGSizeMake(lastButtonPosition + 20, 60);
     }
+    
+    // Add favorite button
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle:@"我的最愛" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(showFavoriteView) forControlEvents:UIControlEventTouchUpInside];
+    button.tintColor = [UIColor whiteColor];
+    button.frame = CGRectMake(0, 55, 300, 30);
+    [categoryView addSubview:button];
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
@@ -480,6 +489,29 @@
     GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:currentLocation];
     getDataController.delegate = self;
     [getDataController searchNearby:[categoryType objectAtIndex:button.tag]];
+}
+
+#pragma mark - Show favorite result
+
+- (void)showFavoriteView
+{
+    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"userData" ofType:@"sqlite"]];
+    searchResults = [NSMutableArray new];
+    searchResultsReference = [NSMutableArray new];
+    if ([db open]) {
+        FMResultSet *result = [db executeQuery:@"select * from favorite"];
+        while ([result next]) {
+            [searchResults addObject:[result stringForColumn:@"name"]];
+            [searchResultsReference addObject:[result stringForColumn:@"reference"]];
+        }
+        [db close];
+    }
+    [self dismissCategoryView];
+    
+    [searchResultTableView reloadData];
+    [self showSearchTableView];
+    
+    [self.view addSubview:searchResultTableView];
 }
 
 @end

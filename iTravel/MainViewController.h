@@ -23,6 +23,7 @@
     UITableView *searchResultTableView;
     NSMutableArray *searchResults;
     NSMutableArray *searchResultsReference;
+    NSMutableArray *favoriteData;
     
     UIView *categoryView;
     
@@ -41,6 +42,8 @@
 
 - (void)showCategoryView;
 - (void)dismissCategoryView;
+
+- (void)showFavoriteView;
 
 - (void)showAllResultFromNearby;
 

@@ -24,5 +24,6 @@
 @property (nonatomic, strong) NSString *placeReference;
 
 - (void)buttonPressed:(UIButton *)button;
+- (void)addPointToDB;
 
 @end

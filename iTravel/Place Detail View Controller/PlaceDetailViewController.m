@@ -9,6 +9,7 @@
 #import "PlaceDetailViewController.h"
 #import "MapAnnotation.h"
 #import "theGrayButton.h"
+#import "FMDatabase.h"
 
 @interface PlaceDetailViewController ()
 
@@ -88,7 +89,7 @@
         lastPosition = lable.frame.origin.y + lable.frame.size.height + 10;
     }
     
-    NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+    NSArray *displayButton = @[@"撥打電話", @"路線規劃", @"加入我的最愛"];
     for (int i = 0; i < [displayButton count]; i++) {
         int xPosition = self.view.frame.size.width/2 - 108;
         if (i%2) {
@@ -100,10 +101,11 @@
         [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [scrollView addSubview:button];
         
-        //lastPosition = button.frame.origin.y + 43;
+        if (i%2)
+            lastPosition = button.frame.origin.y + 53;
     }
     
-    imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
+    /*imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
     imageWebView.backgroundColor = [UIColor clearColor];
     imageWebView.scalesPageToFit = NO;
     imageWebView.scrollView.scrollEnabled = NO;
@@ -111,7 +113,7 @@
     [imageWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:
                                                             [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",
                                                              [[[detailData objectForKey:@"photos"] objectAtIndex:0] objectForKey:@"photo_reference"]]]]];
-    [scrollView addSubview:imageWebView];
+    [scrollView addSubview:imageWebView];*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,7 +151,7 @@
         lastPosition = lable.frame.origin.y + lable.frame.size.height + 10;
     }
     
-    NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+    NSArray *displayButton = @[@"撥打電話", @"路線規劃", @"加入我的最愛"];
     for (int i = 0; i < [displayButton count]; i++) {
         int xPosition = self.view.frame.size.width/2 - 108;
         if (i%2) {
@@ -161,10 +163,10 @@
         [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [scrollView addSubview:button];
         
-        //lastPosition = button.frame.origin.y + 43;
+        lastPosition = button.frame.origin.y + 43;
     }
     
-    imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
+    /*imageWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20, lastPosition + 43, 280, 280)];
     imageWebView.backgroundColor = [UIColor clearColor];
     imageWebView.scalesPageToFit = NO;
     imageWebView.scrollView.scrollEnabled = NO;
@@ -172,7 +174,7 @@
     [imageWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:
                                                             [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&sensor=true&key=AIzaSyC19nuMyJzGByx56Fsw-LQmOUSyjCVnBnI",
                                                             [[[detailData objectForKey:@"photos"] objectAtIndex:0] objectForKey:@"photo_reference"]]]]];
-    [scrollView addSubview:imageWebView];
+    [scrollView addSubview:imageWebView];*/
     //scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lastPosition + 360);
 }
 
@@ -197,10 +199,27 @@
         case 1:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com/?q=%f,%f", placeCoordinate.latitude, placeCoordinate.longitude]]];
             break;
-            
+        case 2:
+            [self addPointToDB];
+            break;
         default:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[detailData objectForKey:@"formatted_phone_number"]]];
             break;
+    }
+}
+
+#pragma mark - All about add to db
+
+- (void)addPointToDB
+{
+    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"userData" ofType:@"sqlite"]];
+    if ([db open]) {
+        [db executeUpdate:[NSString stringWithFormat:@"insert into favorite values(0, \"%@\", \"%@\", %f, %f)",
+                           [placeData objectForKey:@"name"],
+                           [placeData objectForKey:@"reference"],
+                           placeCoordinate.latitude,
+                           placeCoordinate.longitude]];
+        [db close];
     }
 }
 
