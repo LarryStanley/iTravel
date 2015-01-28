@@ -16,6 +16,7 @@
 @end
 
 @implementation MainViewController
+@synthesize mainMap;
 
 - (void)viewDidLoad
 {
@@ -60,10 +61,14 @@
     
     // Init location manager
     locationManager = [[CLLocationManager alloc] init];
+
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        [locationManager requestWhenInUseAuthorization];
+    
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
+
     [locationManager startUpdatingLocation];
 }
 
@@ -151,10 +156,57 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     MapAnnotation *mapAnnotation = view.annotation;
-    PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc] init];
+    /*PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc] init];
     placeDetailViewController.title = view.annotation.title;
     placeDetailViewController.placeData = mapAnnotation.data;
-    [self.navigationController pushViewController:placeDetailViewController animated:YES];
+    [self.navigationController pushViewController:placeDetailViewController animated:YES];*/
+    
+    if (!placeDetailView) {
+        placeDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 150)];
+        placeDetailView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
+        [self.view addSubview:placeDetailView];
+        
+        NSArray *data = [[NSArray alloc] initWithObjects:view.annotation.title, [mapAnnotation.data objectForKey:@"vicinity"],nil];
+        int index = 0;
+        for (NSString *string in data) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10 + index * 25, 10, 10)];
+            label.text = string;
+            if (index)
+                label.font = [UIFont systemFontOfSize:16];
+            else
+                label.font = [UIFont systemFontOfSize:20];
+            label.textColor = [UIColor whiteColor];
+            [label sizeToFit];
+            [placeDetailView addSubview:label];
+            
+            index++;
+        }
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.2];
+        placeDetailView.frame = CGRectMake(0, self.view.frame.size.height - 150, self.view.frame.size.width, 150);
+        [UIView commitAnimations];
+    }else{
+        UIView* subview;
+        while ((subview = [[placeDetailView subviews] lastObject]) != nil)
+            [subview removeFromSuperview];
+        
+        NSArray *data = [[NSArray alloc] initWithObjects:view.annotation.title, [mapAnnotation.data objectForKey:@"vicinity"],nil];
+        int index = 0;
+        for (NSString *string in data) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10 + index * 25, 10, 10)];
+            label.text = string;
+            if (index)
+                label.font = [UIFont systemFontOfSize:16];
+            else
+                label.font = [UIFont systemFontOfSize:20];
+            label.textColor = [UIColor whiteColor];
+            [label sizeToFit];
+            [placeDetailView addSubview:label];
+            
+            index++;
+        }
+    }
 }
 
 #pragma mark - All about get data controller delegate
@@ -163,7 +215,6 @@
 {
     [mainMap removeAnnotations:mainMap.annotations];
     if ([searchType isEqualToString:@"nearby"]) {
-        
         searchResults = [receiveData objectForKey:@"results"];
         for (int i = 0; i < [searchResults count]; i++) {
             NSDictionary *placeData = [searchResults objectAtIndex:i];
@@ -178,6 +229,7 @@
                                                                   [[[[placeData objectForKey:@"geometry"]
                                                                      objectForKey:@"location"]
                                                                     objectForKey:@"lng"] floatValue]);
+            mapAnnotation.data = placeData;
             [mainMap addAnnotation:mapAnnotation];
             
             if (!showAllNearbyButton){
@@ -395,7 +447,10 @@
     }
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [searchResults objectAtIndex:indexPath.row];
+    if ([searchType isEqualToString:@"nearby"])
+        cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
+    else
+        cell.textLabel.text = [searchResults objectAtIndex:indexPath.row];
     //cell.detailTextLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"formatted_address"];
     
     cell.backgroundColor = [UIColor clearColor];
@@ -410,11 +465,22 @@
     [self hideSearchTableView];
     [self.view endEditing:YES];
     
-    searchType = @"detail";
-    
-    GetDataController *getDataController = [[GetDataController alloc] initWithSearchPlaceDetail:[searchResultsReference objectAtIndex:indexPath.row]];
-    getDataController.delegate = self;
-    [getDataController getPlaceDetail];
+    if ([searchType isEqualToString:@"nearby"]){
+        NSDictionary *selectData = [searchResults objectAtIndex:indexPath.row];
+        CLLocationCoordinate2D selectCoordinate = CLLocationCoordinate2DMake( [[[[selectData objectForKey:@"geometry"]
+                                                                                 objectForKey:@"location"]
+                                                                                objectForKey:@"lat"] floatValue],
+                                                                             [[[[selectData objectForKey:@"geometry"]
+                                                                                objectForKey:@"location"]
+                                                                               objectForKey:@"lng"] floatValue]);
+        [self changeMapCenter:selectCoordinate];
+    }else{
+        searchType = @"detail";
+
+        GetDataController *getDataController = [[GetDataController alloc] initWithSearchPlaceDetail:[searchResultsReference objectAtIndex:indexPath.row]];
+        getDataController.delegate = self;
+        [getDataController getPlaceDetail];
+    }
 }
 
 #pragma mark - All about category view
@@ -485,8 +551,10 @@
 
     NSMutableArray *categoryType = [[NSMutableArray alloc] initWithObjects:@"food", @"cafe", @"gas_station", @"bakery", @"movie_theater",@"atm",nil];
     searchType = @"nearby";
+    CLLocation *centralCoordinate = [[CLLocation alloc] initWithLatitude:[mainMap centerCoordinate].latitude longitude:[mainMap centerCoordinate].longitude];
+    NSLog(@"%@", centralCoordinate);
     
-    GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:currentLocation];
+    GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:centralCoordinate];
     getDataController.delegate = self;
     [getDataController searchNearby:[categoryType objectAtIndex:button.tag]];
 }

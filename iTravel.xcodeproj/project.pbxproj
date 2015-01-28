@@ -317,7 +317,7 @@
 				ORGANIZATIONNAME = LarryStanley;
 				TargetAttributes = {
 					48EA31C51976DE5F0063346A = {
-						DevelopmentTeam = 7RGJFTJXTK;
+						DevelopmentTeam = 9HAL8PT3T2;
 					};
 					48EA31E91976DE5F0063346A = {
 						TestTargetID = 48EA31C51976DE5F0063346A;
@@ -556,7 +556,7 @@
 				GCC_PREFIX_HEADER = "iTravel/iTravel-Prefix.pch";
 				INFOPLIST_FILE = "iTravel/iTravel-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC476217-324D-4A71-919E-09C80CCCE62D";
+				PROVISIONING_PROFILE = "5e8473b4-51f9-48fe-9d1d-dbb44dd361df";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -573,7 +573,7 @@
 				GCC_PREFIX_HEADER = "iTravel/iTravel-Prefix.pch";
 				INFOPLIST_FILE = "iTravel/iTravel-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC476217-324D-4A71-919E-09C80CCCE62D";
+				PROVISIONING_PROFILE = "5e8473b4-51f9-48fe-9d1d-dbb44dd361df";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

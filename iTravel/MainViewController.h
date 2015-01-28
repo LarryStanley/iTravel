@@ -31,7 +31,10 @@
     UIButton *showAllNearbyButton;
     
     UIView *nearbyIllustratorView;
+    
+    UIView *placeDetailView;
 }
+@property (strong, nonatomic) IBOutlet MKMapView *mainMap;
 
 - (void)showCurrentLocation;
 
