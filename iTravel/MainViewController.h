@@ -33,6 +33,8 @@
     UIView *nearbyIllustratorView;
     
     UIView *placeDetailView;
+    
+    NSDictionary *placeDetailData;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *mainMap;
 
@@ -51,5 +53,7 @@
 - (void)showAllResultFromNearby;
 
 - (void)categoryButtonPress:(UIButton *)button;
+
+- (void)placeDetailButtonPress:(UIButton *)button;
 
 @end

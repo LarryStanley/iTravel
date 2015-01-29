@@ -10,6 +10,7 @@
 #import "MapAnnotation.h"
 #import "PlaceDetailViewController.h"
 #import "FMDatabase.h"
+#import "theGrayButton.h"
 
 @interface MainViewController ()
 
@@ -161,6 +162,8 @@
     placeDetailViewController.placeData = mapAnnotation.data;
     [self.navigationController pushViewController:placeDetailViewController animated:YES];*/
     
+    placeDetailData = mapAnnotation.data;
+    
     if (!placeDetailView) {
         placeDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 150)];
         placeDetailView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
@@ -180,6 +183,22 @@
             [placeDetailView addSubview:label];
             
             index++;
+        }
+        
+        int lastPosition = 80;
+        NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+        for (int i = 0; i < [displayButton count]; i++) {
+            int xPosition = self.view.frame.size.width/2 - 108;
+            if (i%2) {
+                xPosition += 118;
+            }
+            theGrayButton *button = [[theGrayButton alloc] initWithFrame:CGRectMake(xPosition, lastPosition, 98, 33)
+                                                           AndButtonText:[displayButton objectAtIndex:i]];
+            button.tag = i;
+            [button addTarget:self action:@selector(placeDetailButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+            [placeDetailView addSubview:button];
+            
+            //lastPosition = button.frame.origin.y + 43;
         }
         
         [UIView beginAnimations:nil context:nil];
@@ -205,6 +224,22 @@
             [placeDetailView addSubview:label];
             
             index++;
+        }
+        
+        int lastPosition = 80;
+        NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+        for (int i = 0; i < [displayButton count]; i++) {
+            int xPosition = self.view.frame.size.width/2 - 108;
+            if (i%2) {
+                xPosition += 118;
+            }
+            theGrayButton *button = [[theGrayButton alloc] initWithFrame:CGRectMake(xPosition, lastPosition, 98, 33)
+                                                           AndButtonText:[displayButton objectAtIndex:i]];
+            button.tag = i;
+            [button addTarget:self action:@selector(placeDetailButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+            [placeDetailView addSubview:button];
+            
+            //lastPosition = button.frame.origin.y + 43;
         }
     }
 }
@@ -580,6 +615,23 @@
     [self showSearchTableView];
     
     [self.view addSubview:searchResultTableView];
+}
+
+#pragma mark - All about place detail function
+
+- (void)placeDetailButtonPress:(UIButton *)button
+{
+    switch (button.tag) {
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com/?q=%f,%f", [[[[placeDetailData objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lat"] floatValue], [[[[placeDetailData objectForKey:@"geometry"]                                                                                                                                                                                        objectForKey:@"location"]                                                                                                                                                                                                       objectForKey:@"lng"] floatValue]]]];
+            break;
+        case 2:
+            //[self addPointToDB];
+            break;
+        default:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[placeDetailData objectForKey:@"formatted_phone_number"]]];
+            break;
+    }
 }
 
 @end
