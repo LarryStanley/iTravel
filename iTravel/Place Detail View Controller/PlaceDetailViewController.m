@@ -212,7 +212,9 @@
 
 - (void)addPointToDB
 {
-    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"userData" ofType:@"sqlite"]];
+    NSString *dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userData.db"];
+    //BOOL needInitTable = ![[NSFileManager defaultManager] fileExistsAtPath:dbPath];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if ([db open]) {
         [db executeUpdate:[NSString stringWithFormat:@"insert into favorite values(0, \"%@\", \"%@\", %f, %f)",
                            [placeData objectForKey:@"name"],

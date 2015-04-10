@@ -56,4 +56,6 @@
 
 - (void)placeDetailButtonPress:(UIButton *)button;
 
+- (void)addPointToDB;
+
 @end

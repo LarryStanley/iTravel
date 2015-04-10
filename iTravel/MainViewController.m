@@ -23,6 +23,18 @@
 {
     [super viewDidLoad];
     
+    // Init location manager
+    locationManager = [[CLLocationManager alloc] init];
+     
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager requestAlwaysAuthorization];
+     
+    [locationManager startUpdatingLocation];
+
+    
     // Init map view
     mainMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     mainMap.delegate = self;
@@ -60,17 +72,6 @@
     
     [self.view addSubview:topSearchBar];
     
-    // Init location manager
-    locationManager = [[CLLocationManager alloc] init];
-
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        [locationManager requestWhenInUseAuthorization];
-    
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-
-    [locationManager startUpdatingLocation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -164,8 +165,10 @@
     
     placeDetailData = mapAnnotation.data;
     
+    //NSLog(@"%@", placeDetailData);
+    
     if (!placeDetailView) {
-        placeDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 150)];
+        placeDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 200)];
         placeDetailView.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
         [self.view addSubview:placeDetailView];
         
@@ -186,7 +189,7 @@
         }
         
         int lastPosition = 80;
-        NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+        NSArray *displayButton = @[@"撥打電話", @"路線規劃", @"加入最愛"];
         for (int i = 0; i < [displayButton count]; i++) {
             int xPosition = self.view.frame.size.width/2 - 108;
             if (i%2) {
@@ -198,12 +201,13 @@
             [button addTarget:self action:@selector(placeDetailButtonPress:) forControlEvents:UIControlEventTouchUpInside];
             [placeDetailView addSubview:button];
             
-            //lastPosition = button.frame.origin.y + 43;
+            if (i%2 && i > 0)
+                lastPosition = button.frame.origin.y + 43;
         }
         
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.2];
-        placeDetailView.frame = CGRectMake(0, self.view.frame.size.height - 150, self.view.frame.size.width, 150);
+        placeDetailView.frame = CGRectMake(0, self.view.frame.size.height - 200, self.view.frame.size.width, 200);
         [UIView commitAnimations];
     }else{
         UIView* subview;
@@ -227,7 +231,7 @@
         }
         
         int lastPosition = 80;
-        NSArray *displayButton = @[@"撥打電話", @"路線規劃"];
+        NSArray *displayButton = @[@"撥打電話", @"路線規劃", @"加入最愛"];
         for (int i = 0; i < [displayButton count]; i++) {
             int xPosition = self.view.frame.size.width/2 - 108;
             if (i%2) {
@@ -239,7 +243,8 @@
             [button addTarget:self action:@selector(placeDetailButtonPress:) forControlEvents:UIControlEventTouchUpInside];
             [placeDetailView addSubview:button];
             
-            //lastPosition = button.frame.origin.y + 43;
+            if (i%2 && i > 0)
+                lastPosition = button.frame.origin.y + 43;
         }
     }
 }
@@ -598,16 +603,20 @@
 
 - (void)showFavoriteView
 {
-    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"userData" ofType:@"sqlite"]];
+    NSString *dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userData.db"];
+    BOOL needInitTable = ![[NSFileManager defaultManager] fileExistsAtPath:dbPath];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     searchResults = [NSMutableArray new];
     searchResultsReference = [NSMutableArray new];
-    if ([db open]) {
-        FMResultSet *result = [db executeQuery:@"select * from favorite"];
-        while ([result next]) {
-            [searchResults addObject:[result stringForColumn:@"name"]];
-            [searchResultsReference addObject:[result stringForColumn:@"reference"]];
+    if (!needInitTable) {
+        if ([db open]) {
+            FMResultSet *result = [db executeQuery:@"select * from favorite"];
+            while ([result next]) {
+                [searchResults addObject:[result stringForColumn:@"name"]];
+                [searchResultsReference addObject:[result stringForColumn:@"reference"]];
+            }
+            [db close];
         }
-        [db close];
     }
     [self dismissCategoryView];
     
@@ -626,11 +635,34 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com/?q=%f,%f", [[[[placeDetailData objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lat"] floatValue], [[[[placeDetailData objectForKey:@"geometry"]                                                                                                                                                                                        objectForKey:@"location"]                                                                                                                                                                                                       objectForKey:@"lng"] floatValue]]]];
             break;
         case 2:
-            //[self addPointToDB];
+            [self addPointToDB];
             break;
         default:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[placeDetailData objectForKey:@"formatted_phone_number"]]];
             break;
+    }
+}
+
+#pragma mark - All about add to db
+
+- (void)addPointToDB
+{
+    NSString *dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userData.db"];
+    BOOL needInitTable = ![[NSFileManager defaultManager] fileExistsAtPath:dbPath];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if ([db open]) {
+        if (needInitTable) {
+            [db executeUpdate:@"CREATE TABLE favorite (id INT, name TEXT, reference TEXT, latitude FLOAT, logitude FLOAT)"];
+            NSLog(@"init table");
+        }
+
+        [db executeUpdate:[NSString stringWithFormat:@"insert into favorite values(0, \"%@\", \"%@\", %f, %f)",
+                           [placeDetailData objectForKey:@"name"],
+                           [placeDetailData objectForKey:@"reference"],
+                           [[[[placeDetailData objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lat"] floatValue],
+                           [[[[placeDetailData objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lng"] floatValue]
+                           ]];
+        [db close];
     }
 }
 
