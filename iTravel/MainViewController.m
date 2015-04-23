@@ -637,6 +637,9 @@
         case 2:
             [self addPointToDB];
             break;
+        case 0:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[placeDetailData objectForKey:@"formatted_phone_number"]]];
+            break;
         default:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[placeDetailData objectForKey:@"formatted_phone_number"]]];
             break;
