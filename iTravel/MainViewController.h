@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GetDataController.h"
 
-@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NSStreamDelegate>
 {
     NSString *searchType;
     
@@ -35,6 +35,9 @@
     UIView *placeDetailView;
     
     NSDictionary *placeDetailData;
+    
+    NSInputStream *iStream;
+    NSOutputStream *oStream;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *mainMap;
 
