@@ -25,13 +25,16 @@ PODS:
   - FMDB/common (2.4)
   - FMDB/standard (2.4):
     - FMDB/common
+  - SIOSocket (0.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.4)
   - FMDB
+  - SIOSocket
 
 SPEC CHECKSUMS:
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  FMDB: 0b2fa25e5264ef177973c0cb8c02c711107979aa
+  AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  FMDB: d274d9ff773415735022ac57bfba9f6002f9fed8
+  SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.4

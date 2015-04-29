@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EE7529A97372D2AD4B69F4F7"
-               BuildableName = "libPods-FMDB.a"
-               BlueprintName = "Pods-FMDB"
+               BlueprintIdentifier = "737F4F5EC669C2D77B495C27"
+               BuildableName = "libPods-SIOSocket.a"
+               BlueprintName = "Pods-SIOSocket"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
