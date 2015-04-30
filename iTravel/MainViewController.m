@@ -42,11 +42,11 @@
     [self.view addSubview:mainMap];
     
     // Init Search Bar
-    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, 300, 44)];
+    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width - 64, 44)];
     topSearchBar.delegate = self;
-    topSearchBar.placeholder = @"搜尋附近地區";
+    topSearchBar.placeholder = @"搜尋全台灣";
     // Set Search Bar Interface
-    [topSearchBar setBarTintColor:[UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1]];
+    [topSearchBar setBarTintColor:[UIColor colorWithRed:200/255.f green:36/255.f blue:97/255.f alpha:1]];
     for (UIView *subView in topSearchBar.subviews) {
         for (UIView *subSubView in subView.subviews) {
             if ([subSubView isKindOfClass:[UITextField class]]) {
@@ -63,14 +63,36 @@
     currentLocationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [currentLocationButton setBackgroundImage:[UIImage imageNamed:@"currentLocationButton.png"]
                                      forState:UIControlStateNormal];
-    currentLocationButton.frame = CGRectMake(10, self.view.frame.size.height - 40, 30, 30);
+    currentLocationButton.frame = CGRectMake( topSearchBar.frame.size.width + topSearchBar.frame.origin.x, 30, 44, 44);
     [currentLocationButton addTarget:self
                               action:@selector(showCurrentLocation)
                     forControlEvents:UIControlEventTouchUpInside];
+    
+    // Init collection button
+    collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    collectionButton.frame = CGRectMake( 10, self.view.frame.size.height - 44, self.view.frame.size.width/2 - 10, 44);
+    [collectionButton setTitle:@"收藏" forState:UIControlStateNormal];
+    collectionButton.backgroundColor = [UIColor colorWithRed:200/255.f green:36/255.f blue:97/255.f alpha:1];
+    [collectionButton addTarget:self
+                              action:@selector(showCollectionView)
+                    forControlEvents:UIControlEventTouchUpInside];
+    
+    // Init nearby button
+    nearbyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    nearbyButton.frame = CGRectMake( self.view.frame.size.width/2, self.view.frame.size.height - 44, self.view.frame.size.width/2 - 10, 44);
+    [nearbyButton setTitle:@"附近" forState:UIControlStateNormal];
+    nearbyButton.backgroundColor = [UIColor colorWithRed:200/255.f green:36/255.f blue:97/255.f alpha:1];
+    [nearbyButton addTarget:self
+                              action:@selector(showCurrentLocation)
+                    forControlEvents:UIControlEventTouchUpInside];
+    
+    // Add to current view
     [self.view addSubview:currentLocationButton];
-    
-    
     [self.view addSubview:topSearchBar];
+    [self.view addSubview:collectionButton];
+    [self.view addSubview:nearbyButton];
     
 }
 
@@ -78,11 +100,11 @@
 {
     [topSearchBar removeFromSuperview];
     
-    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, 300, 44)];
+    topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width - 64, 44)];
     topSearchBar.delegate = self;
-    topSearchBar.placeholder = @"搜尋附近地區";
+    topSearchBar.placeholder = @"搜尋全台灣";
     // Set Search Bar Interface
-    [topSearchBar setBarTintColor:[UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1]];
+    [topSearchBar setBarTintColor:[UIColor colorWithRed:200/255.f green:36/255.f blue:97/255.f alpha:1]];
     for (UIView *subView in topSearchBar.subviews) {
         for (UIView *subSubView in subView.subviews) {
             if ([subSubView isKindOfClass:[UITextField class]]) {
@@ -126,6 +148,13 @@
 - (void)showCurrentLocation
 {
     [self changeMapCenter:currentLocation.coordinate];
+}
+
+#pragma mark - All about change view method
+
+- (void)showCollectionView
+{
+    NSLog(@"show collection view");
 }
 
 #pragma mark - All about map method
@@ -391,7 +420,7 @@
         for (UIView *subSubView in subView.subviews) {
             if ([subSubView isKindOfClass:[UIButton class]]) {
                 UIButton *cancelButton = (UIButton *)subView;
-                cancelButton.tintColor = [UIColor colorWithRed:231/255.f green:64/255.f blue:72/255.f alpha:1];
+                cancelButton.tintColor = [UIColor whiteColor];
                 break;
             }
         }
@@ -407,12 +436,8 @@
     
     searchResults = [[NSMutableArray alloc] init];
     
-    if (searchBar.text.length > 0){
+    if (searchBar.text.length > 0)
         [self showSearchTableView];
-        [self dismissCategoryView];
-    }else
-        [self showCategoryView];
-    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText

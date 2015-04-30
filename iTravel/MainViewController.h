@@ -29,6 +29,8 @@
     
     UIButton *currentLocationButton;
     UIButton *showAllNearbyButton;
+    UIButton *collectionButton;
+    UIButton *nearbyButton;
     
     UIView *nearbyIllustratorView;
     
@@ -57,5 +59,7 @@
 - (void)placeDetailButtonPress:(UIButton *)button;
 
 - (void)addPointToDB;
+
+- (void)showCollectionView;
 
 @end

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		48089A741976DF4D00EBEB53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A731976DF4D00EBEB53 /* MapKit.framework */; };
 		48089A761976E0FE00EBEB53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48089A751976E0FE00EBEB53 /* CoreLocation.framework */; };
+		48209B2B1AF24F39005E6684 /* currentLocationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 48209B2A1AF24F39005E6684 /* currentLocationButton.png */; };
 		4856241A199D270200D42DB1 /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48562419199D270200D42DB1 /* PlaceDetailViewController.m */; };
 		4856241E199DD3E300D42DB1 /* theGrayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4856241D199DD3E300D42DB1 /* theGrayButton.m */; };
 		48562422199DD47D00D42DB1 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48562420199DD47D00D42DB1 /* Button@2x.png */; };
@@ -31,7 +32,6 @@
 		48EA31EE1976DE5F0063346A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EA31CD1976DE5F0063346A /* UIKit.framework */; };
 		48EA31F61976DE5F0063346A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48EA31F41976DE5F0063346A /* InfoPlist.strings */; };
 		48EA31F81976DE5F0063346A /* iTravelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EA31F71976DE5F0063346A /* iTravelTests.m */; };
-		48F51C9F199CE8EB00F340E3 /* currentLocationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F51C9E199CE8EB00F340E3 /* currentLocationButton.png */; };
 		E2CE7F30B8C20DBA8B14380D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C75626AACA2D36D04501265 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +49,7 @@
 		3D21EB5E0D581FFE310699D4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		48089A731976DF4D00EBEB53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		48089A751976E0FE00EBEB53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		48209B2A1AF24F39005E6684 /* currentLocationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = currentLocationButton.png; sourceTree = "<group>"; };
 		48562418199D270200D42DB1 /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = "Place Detail View Controller/PlaceDetailViewController.h"; sourceTree = "<group>"; };
 		48562419199D270200D42DB1 /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = "Place Detail View Controller/PlaceDetailViewController.m"; sourceTree = "<group>"; };
 		4856241C199DD3E300D42DB1 /* theGrayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = theGrayButton.h; path = "the Gray Button/theGrayButton.h"; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		48EA31F31976DE5F0063346A /* iTravelTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iTravelTests-Info.plist"; sourceTree = "<group>"; };
 		48EA31F51976DE5F0063346A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		48EA31F71976DE5F0063346A /* iTravelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iTravelTests.m; sourceTree = "<group>"; };
-		48F51C9E199CE8EB00F340E3 /* currentLocationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = currentLocationButton.png; path = Images/currentLocationButton.png; sourceTree = "<group>"; };
 		6C75626AACA2D36D04501265 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCDBD96DC95D61936D506369 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,13 +113,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		482EB69E1AE901D100D140B2 /* Socket */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Socket;
-			sourceTree = "<group>";
-		};
 		483C84D71987FE83003CF408 /* Main View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,7 +164,7 @@
 		48C0DD66198B4167001BD159 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				48F51C9E199CE8EB00F340E3 /* currentLocationButton.png */,
+				48209B2A1AF24F39005E6684 /* currentLocationButton.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -219,7 +212,6 @@
 				48EA31DB1976DE5F0063346A /* Main_iPhone.storyboard */,
 				4856241B199D270C00D42DB1 /* Place Detail View Controller */,
 				483C84D71987FE83003CF408 /* Main View Controller */,
-				482EB69E1AE901D100D140B2 /* Socket */,
 				48A50A29198800D100BF4F50 /* Get Data Controller */,
 				4856241F199DD3EA00D42DB1 /* the Gray Button */,
 				48C0DD65198AB1A5001BD159 /* Map Annotation */,
@@ -350,10 +342,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48209B2B1AF24F39005E6684 /* currentLocationButton.png in Resources */,
 				48EA31E51976DE5F0063346A /* Images.xcassets in Resources */,
 				48987B8D198A8C6E009A4D58 /* Location.gpx in Resources */,
 				48EA31DD1976DE5F0063346A /* Main_iPhone.storyboard in Resources */,
-				48F51C9F199CE8EB00F340E3 /* currentLocationButton.png in Resources */,
 				48EA31D41976DE5F0063346A /* InfoPlist.strings in Resources */,
 				48562422199DD47D00D42DB1 /* Button@2x.png in Resources */,
 				48562423199DD47D00D42DB1 /* ButtonSelected@2x.png in Resources */,
