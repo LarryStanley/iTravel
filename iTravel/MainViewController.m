@@ -11,6 +11,7 @@
 #import "PlaceDetailViewController.h"
 #import "FMDatabase.h"
 #import "theGrayButton.h"
+#import "CollectionViewController.h"
 
 @interface MainViewController ()
 
@@ -85,7 +86,7 @@
     [nearbyButton setTitle:@"附近" forState:UIControlStateNormal];
     nearbyButton.backgroundColor = [UIColor colorWithRed:200/255.f green:36/255.f blue:97/255.f alpha:1];
     [nearbyButton addTarget:self
-                              action:@selector(showCurrentLocation)
+                              action:@selector(showNearbyView)
                     forControlEvents:UIControlEventTouchUpInside];
     
     // Add to current view
@@ -98,6 +99,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     [topSearchBar removeFromSuperview];
     
     topSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width - 64, 44)];
@@ -154,7 +157,26 @@
 
 - (void)showCollectionView
 {
-    NSLog(@"show collection view");
+    CollectionViewController *collectionViewController = [[CollectionViewController alloc] init];
+    [self.navigationController pushViewController:collectionViewController animated:YES];
+}
+
+- (void)showNearbyView
+{
+    NearbyViewController *nearbyViewController = [[NearbyViewController alloc] init];
+    nearbyViewController.delegate = self;
+    [self.navigationController pushViewController:nearbyViewController animated:YES];
+}
+
+- (void)nearbyViewController:(NearbyViewController *)controller searchCategory:(NSString *)categoryName
+{
+    searchType = @"nearby";
+
+    CLLocation *centralCoordinate = [[CLLocation alloc] initWithLatitude:[mainMap centerCoordinate].latitude longitude:[mainMap centerCoordinate].longitude];
+
+    GetDataController *getDataController = [[GetDataController alloc] initWithSearchNearby:centralCoordinate];
+    getDataController.delegate = self;
+    [getDataController searchNearby:categoryName];
 }
 
 #pragma mark - All about map method
@@ -301,7 +323,7 @@
             mapAnnotation.data = placeData;
             [mainMap addAnnotation:mapAnnotation];
             
-            if (!showAllNearbyButton){
+            /*if (!showAllNearbyButton){
                 showAllNearbyButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 84, 300, 44)];
                 showAllNearbyButton.backgroundColor = [UIColor colorWithRed:47/255.f green:52/255.f blue:60/255.f alpha:1];
                 [showAllNearbyButton setTitle:@"列出所有結果" forState:UIControlStateNormal];
@@ -312,7 +334,7 @@
                 [UIView setAnimationDuration:0.2];
                 showAllNearbyButton.alpha = 1;
                 [UIView commitAnimations];
-            }
+            }*/
             
             
             /*[nearbyIllustratorView removeFromSuperview];

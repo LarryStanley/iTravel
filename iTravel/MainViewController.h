@@ -10,8 +10,9 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "GetDataController.h"
+#import "NearbyViewController.h"
 
-@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NSStreamDelegate>
+@interface MainViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, GetDataControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NSStreamDelegate, NearbyViewControllerDelegate>
 {
     NSString *searchType;
     
@@ -61,5 +62,6 @@
 - (void)addPointToDB;
 
 - (void)showCollectionView;
+- (void)showNearbyView;
 
 @end
