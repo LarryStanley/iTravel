@@ -23,38 +23,6 @@
 {
     [super viewDidLoad];
     
-    // Set Socket
-    CFReadStreamRef readStream = NULL;
-    CFWriteStreamRef writeStream = NULL;
-    
-    NSString *ip = @"140.115.26.49";
-    int port = 54321;
-    
-    CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)ip, port, &readStream, &writeStream);
-    
-    if (readStream && writeStream) {
-        CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-        CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-        
-        iStream = (__bridge NSInputStream *)readStream;
-        [iStream setDelegate:self];
-        [iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [iStream open];
-        
-        oStream = (__bridge NSOutputStream *)writeStream;
-        [oStream setDelegate:self];
-        [oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [oStream open];
-    }
-    
-    NSLog(@"%lu", (unsigned long)[oStream streamStatus]);
-    NSString *str = @"樂 24.9694810,121.1925160 10 1 5C:0A:5B:3B:2D:63 20";
-    
-    const uint8_t *nuit8Text;
-    nuit8Text = (uint8_t *) [str cStringUsingEncoding:NSASCIIStringEncoding];
-    
-    [oStream write:nuit8Text maxLength:strlen((char*)nuit8Text)];
-    
     // Init location manager
     locationManager = [[CLLocationManager alloc] init];
      
@@ -698,27 +666,6 @@
                            [[[[placeDetailData objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lng"] floatValue]
                            ]];
         [db close];
-    }
-}
-
-#pragma mark - All about socket delegate
-
-- (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode {
-    
-    //當訊息從主機由iStream端進入時
-    if (eventCode == NSStreamEventHasBytesAvailable) {
-        NSMutableData *data = [[NSMutableData alloc] init];
-        
-        //定義接收串流的大小
-        uint8_t buf[1024];
-        unsigned int len = 0;
-        len = [(NSInputStream *)stream read:buf maxLength:1024];
-        [data appendBytes:(const void *)buf length:len];
-        
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        //將得到得的結果輸出到TextView上
-        NSLog(@"%@", str);
     }
 }
 

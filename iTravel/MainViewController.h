@@ -35,9 +35,6 @@
     UIView *placeDetailView;
     
     NSDictionary *placeDetailData;
-    
-    NSInputStream *iStream;
-    NSOutputStream *oStream;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *mainMap;
 
